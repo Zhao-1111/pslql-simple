@@ -20,15 +20,13 @@ public class App
     {
         String str = "declare\n"
                 + "    var1 int := 7;\n"
-                + "    var2 long;\n"
+                + "    var2 varchar(20) := 'dfs';\n"
                 + "    var3 number := 10;\n"
+                + "    var4 int;\n"
                 + "begin\n"
-                + "    var2 := var3;\n"
+                + "    var4 := var1;\n"
                 + "    select column1, column2 into var3, var2 from tab1;\n"
-                + "end;\n";
-        // DorisLexer lexer = new DorisLexer(new CaseInsensitiveStream(CharStreams.fromString(sql)));
-        // CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        // DorisParser parser = new DorisParser(tokenStream);
+                + "end;";
         try {
             PlSqlLexer lexer = new PlSqlLexer(CharStreams.fromString(str));
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);

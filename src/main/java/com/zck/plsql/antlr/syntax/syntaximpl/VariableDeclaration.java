@@ -3,8 +3,8 @@ package com.zck.plsql.antlr.syntax.syntaximpl;
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
 import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.syntax.expression.Expression;
-import com.zck.plsql.antlr.syntax.expression.VariableExpression;
-import com.zck.plsql.antlr.intermediate.type.TypeCheckUtil;
+import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
+import com.zck.plsql.antlr.intermediate.type.TypeUtil;
 
 public class VariableDeclaration extends ITreeNode {
     private VariableExpression varExpression;
@@ -12,7 +12,7 @@ public class VariableDeclaration extends ITreeNode {
 
     @Override
     public Object semanticCheck() throws Exception {
-        if (!TypeCheckUtil.checkType(varExpression, valueExpression)) {
+        if (!TypeUtil.checkType(varExpression, valueExpression)) {
             throw new Exception("type exception");
         }
         return null;

@@ -2,7 +2,8 @@ package com.zck.plsql.antlr.syntax;
 
 import com.zck.plsql.antlr.PlSqlParser;
 import com.zck.plsql.antlr.PlSqlParserBaseVisitor;
-import com.zck.plsql.antlr.syntax.expression.VariableExpression;
+import com.zck.plsql.antlr.syntax.expression.constantExpression.ConstantExpression;
+import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.antlr.syntax.sql.QueryBlock;
 import com.zck.plsql.antlr.intermediate.symtab.SymTab;
 import com.zck.plsql.antlr.syntax.syntaximpl.AnonymousBlock;
@@ -15,6 +16,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,8 +85,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
         varExpression.setType(ctx.type_spec().getText());
         variableDeclaration.setVarExpression(varExpression);
         if (ctx.default_value_part() != null) {
-            VariableExpression valueExpression = new VariableExpression();
-            valueExpression.setName(symTab.getStack().peek(), ctx.default_value_part().expression().getText());
+            ConstantExpression valueExpression = new ConstantExpression();
+            valueExpression.setConstValue(visitChildren(ctx.default_value_part().expression()));
             variableDeclaration.setValueExpression(valueExpression);
         }
         return variableDeclaration;
@@ -127,8 +129,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
                 }
             }
             this.enterSQL = true;
-            for (ParserRuleContext node: ctx.selected_list().select_list_elements()) {
-                if (node instanceof PlSqlParser.Select_list_elementsContext ) {
+            for (ParserRuleContext node : ctx.selected_list().select_list_elements()) {
+                if (node instanceof PlSqlParser.Select_list_elementsContext) {
                     selectElements++;
                     visitChildren(node);
                 }
@@ -178,6 +180,18 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     public Object visitTableview_name(PlSqlParser.Tableview_nameContext ctx) {
         tables.add(ctx.getText());
         return null;
+    }
+
+    // 声明常量节点
+    @Override
+    public Object visitConstant(PlSqlParser.ConstantContext ctx) {
+        if (ctx.numeric() != null) {
+            return new BigDecimal(ctx.getText());
+        }
+        if (ctx.quoted_string() != null) {
+            return ctx.getText();
+        }
+        return ctx.getText();
     }
 
 }

@@ -1,12 +1,13 @@
 package com.zck.plsql.antlr.syntax.expression;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
+import com.zck.plsql.antlr.intermediate.type.Type;
+import com.zck.plsql.antlr.intermediate.type.TypeUtil;
 import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.intermediate.type.TypeSpec;
 
 public class Expression extends ITreeNode {
     public TypeSpec type;
-    private String Value;
 
     @Override
     public Object compileCodeGen(CompilerContext ctx) throws Exception {
@@ -27,7 +28,12 @@ public class Expression extends ITreeNode {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = new TypeSpec(type);
+    }
+
+    public void setType(String type) {
+        Type plType = TypeUtil.getType(type);
+        this.type = new TypeSpec(plType);
     }
 }

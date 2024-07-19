@@ -2,7 +2,7 @@ package com.zck.plsql.antlr.syntax.sql;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
 import com.zck.plsql.antlr.syntax.ITreeNode;
-import com.zck.plsql.antlr.syntax.expression.VariableExpression;
+import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 
 import java.util.List;
 
