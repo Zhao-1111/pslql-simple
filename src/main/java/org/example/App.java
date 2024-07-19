@@ -20,7 +20,7 @@ public class App
     {
         String str = "declare\n"
                 + "    var1 int := 7;\n"
-                + "    var2 varchar(20) := 'dfs';\n"
+                + "    var2 varchar := 'dfs';\n"
                 + "    var3 number := 10;\n"
                 + "    var4 int;\n"
                 + "begin\n"

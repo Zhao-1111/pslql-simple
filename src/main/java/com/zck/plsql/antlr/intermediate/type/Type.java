@@ -1,7 +1,5 @@
 package com.zck.plsql.antlr.intermediate.type;
 
-import java.util.Map;
-
 public enum Type {
     BOOL,
     INT,
@@ -10,6 +8,6 @@ public enum Type {
     NUMBER,
     VARCHAR,
     CHAR,
-    DATA,
+    DATE,
     NULL;
 }
