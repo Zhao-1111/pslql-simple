@@ -1,12 +1,12 @@
 package com.zck.plsql.antlr.syntax.sql;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
-import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
+import com.zck.plsql.antlr.syntax.statement.Statement;
 
 import java.util.List;
 
-public class QueryBlock extends ITreeNode {
+public class QueryBlock extends Statement {
     private List<VariableExpression> intoList;
     private List<VariableExpression> ids;
     private List<String> tables;

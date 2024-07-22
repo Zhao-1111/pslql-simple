@@ -1,12 +1,11 @@
-package com.zck.plsql.antlr.syntax.syntaximpl;
+package com.zck.plsql.antlr.syntax.statement;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
-import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.syntax.expression.Expression;
 import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.antlr.intermediate.type.TypeUtil;
 
-public class AssignmentStatement extends ITreeNode {
+public class AssignmentStatement extends Statement {
     private VariableExpression variableExpression;
     private Expression ValueExpression;
 

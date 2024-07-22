@@ -29,12 +29,12 @@ public abstract class ITreeNode {
      * @return
      * @throws Exception
      */
-    public Object execute(InterpreterContext ctx)throws Exception {
+    public Object stepExecute(InterpreterContext ctx)throws Exception {
         for (ITreeNode node : getChildrens()) {
-            node.execute(ctx);
+            node.stepExecute(ctx);
         }
         return null;
-    };
+    }
 
     /**
      * 编译执行前IR代码生成

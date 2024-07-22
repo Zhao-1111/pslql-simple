@@ -1,9 +1,8 @@
-package com.zck.plsql.antlr.syntax.syntaximpl;
+package com.zck.plsql.antlr.syntax.statement;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
-import com.zck.plsql.antlr.syntax.ITreeNode;
 
-public class SeqOfDeclareSpecs extends ITreeNode {
+public class SeqOfDeclareSpecs extends Statement {
     @Override
     public Object compileCodeGen(CompilerContext ctx) throws Exception {
         return null;

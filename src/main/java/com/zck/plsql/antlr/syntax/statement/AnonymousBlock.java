@@ -1,4 +1,4 @@
-package com.zck.plsql.antlr.syntax.syntaximpl;
+package com.zck.plsql.antlr.syntax.statement;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
 import com.zck.plsql.antlr.syntax.ITreeNode;
@@ -12,15 +12,16 @@ import java.util.List;
  * SeqOfStatements
  * ExceptionHandler
  */
-public class AnonymousBlock extends ITreeNode {
+public class AnonymousBlock extends Statement {
     private SeqOfDeclareSpecs seqOfDeclareSpecs;
     private SeqOfStatements seqOfStatements;
     private List<ExceptionHandler> exceptionHandlers;
 
-    public Object execute(InterpreterContext ctx) throws Exception {
+    public Object stepExecute(InterpreterContext ctx) throws Exception {
+        // 变量作用域
         ctx.getScopes().push(new Scope());
         for (ITreeNode node : getChildrens()) {
-            node.execute(ctx);
+            node.stepExecute(ctx);
         }
         ctx.getScopes().pop();
         return null;
