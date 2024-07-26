@@ -17,10 +17,12 @@ public class TypeUtil {
         put("VARCHAR", Type.VARCHAR);
         put("CHAR", Type.CHAR);
         put("DATE", Type.DATE);
+        put("NULL",Type.NULL);
     }};
 
     private static Set<Type> boolSet = new HashSet<Type>() {{
         add(Type.BOOL);
+        add(Type.NULL);
     }};
 
     private static Set<Type> intSet = new HashSet<Type>() {{
@@ -28,6 +30,7 @@ public class TypeUtil {
         add(Type.LONG);
         add(Type.DOUBLE);
         add(Type.NUMBER);
+        add(Type.NULL);
     }};
     private static Set<Type> longSet = intSet;
     private static Set<Type> doubleSet = intSet;
@@ -36,11 +39,13 @@ public class TypeUtil {
     private static Set<Type> varcharSet = new HashSet<Type>() {{
         add(Type.VARCHAR);
         add(Type.CHAR);
+        add(Type.NULL);
     }};
     private static Set<Type> charSet = varcharSet;
 
     private static Set<Type> dateSet = new HashSet<Type>() {{
         add(Type.DATE);
+        add(Type.NULL);
     }};
 
     private static Map<Type, Set<Type>> typeMatchMap = new HashMap<Type, Set<Type>>() {{

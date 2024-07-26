@@ -1,9 +1,10 @@
 package com.zck.plsql.antlr.syntax.statement;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
-import com.zck.plsql.antlr.executor.interpreterContext.InterpreterContext;
-import com.zck.plsql.antlr.intermediate.CallStack;
-import com.zck.plsql.antlr.intermediate.RuntimeStatementPointer;
+import com.zck.plsql.antlr.executor.interpreter.InterpreterContext;
+import com.zck.plsql.antlr.executor.interpreter.CallStack;
+import com.zck.plsql.antlr.executor.interpreter.RuntimeStatementPointer;
+import com.zck.plsql.antlr.executor.interpreter.Scope;
 import com.zck.plsql.antlr.syntax.ITreeNode;
 
 public class Statement extends ITreeNode {
@@ -93,10 +94,22 @@ public class Statement extends ITreeNode {
         Statement statement = ptr.getStatement();
         if (statement == this) {
             // 这里逻辑是错的
-            for (ITreeNode child:childrens) {
-                child.stepExecute(ctx);
+            for (ITreeNode child : childrens) {
+                child.stepExec(ctx);
             }
         }
         return false;
+    }
+
+    @Override
+    public Object stepExec(InterpreterContext ctx) throws Exception {
+        if (!onEnteringStatement(ctx)) {
+            ctx.getScopes().push(new Scope());
+            for (ITreeNode node : getChildrens()) {
+                node.stepExec(ctx);
+            }
+            onExitingStatement(ctx);
+        }
+        return null;
     }
 }

@@ -3,7 +3,8 @@ package com.zck.plsql.antlr.dispatch;
 import com.zck.plsql.antlr.PlSqlLexer;
 import com.zck.plsql.antlr.PlSqlParser;
 import com.zck.plsql.antlr.PlSqlParser.Anonymous_blockContext;
-import com.zck.plsql.antlr.executor.interpreterContext.InterpreterContext;
+import com.zck.plsql.antlr.executor.interpreter.InterpreterContext;
+import com.zck.plsql.antlr.intermediate.SymTab;
 import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.syntax.PLVisitor;
 import com.zck.plsql.antlr.syntax.statement.Statement;
@@ -22,7 +23,8 @@ public class Task {
     }
 
     public void semanticCheck(ITreeNode tree) throws Exception {
-        tree.semanticCheck();
+        SymTab symTab = new SymTab();
+        tree.semanticCheck(symTab);
         StringBuffer sb = new StringBuffer();
         ((Statement) tree).toTreeString(sb, "", "");
         System.out.println(sb);
@@ -32,6 +34,11 @@ public class Task {
 
     public void stepExecute(ITreeNode tree) throws Exception {
         InterpreterContext context = new InterpreterContext();
-        tree.stepExecute(context);
+        tree.stepExec(context);
+    }
+
+    public void execute(ITreeNode tree) throws Exception {
+        InterpreterContext context = new InterpreterContext();
+        tree.execute(context);
     }
 }

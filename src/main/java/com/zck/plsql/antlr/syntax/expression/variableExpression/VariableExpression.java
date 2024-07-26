@@ -1,5 +1,6 @@
 package com.zck.plsql.antlr.syntax.expression.variableExpression;
 
+import com.zck.plsql.antlr.intermediate.SymTab;
 import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.syntax.expression.Expression;
 
@@ -9,7 +10,25 @@ public class VariableExpression extends Expression {
 
     private String name;
 
-    public void setVar(Map<String, ITreeNode> map, Expression expression) {
+    @Override
+    public Object semanticCheck(SymTab symTab) throws Exception {
+        if (!symTab.containsVar(name)) {
+            throw new Exception("variable not exist");
+        }
+        Expression expression = symTab.lookup(name);
+        if (expression == null) {
+            throw new Exception("variable not exist");
+        }
+        if (expression instanceof VariableExpression) {
+            type.setType((VariableExpression) expression);
+        } else {
+            throw new Exception("variable not exist");
+        }
+        return null;
+    }
+
+    // 变量和常量的映射
+    public void setValue(Map<String, ITreeNode> map, Expression expression) {
         map.put(name, expression);
     }
 

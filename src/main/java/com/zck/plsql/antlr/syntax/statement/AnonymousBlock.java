@@ -1,10 +1,14 @@
 package com.zck.plsql.antlr.syntax.statement;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
+import com.zck.plsql.antlr.executor.interpreter.CallStack;
+import com.zck.plsql.antlr.executor.interpreter.RuntimeStatementPointer;
+import com.zck.plsql.antlr.intermediate.SymTab;
 import com.zck.plsql.antlr.syntax.ITreeNode;
-import com.zck.plsql.antlr.executor.interpreterContext.InterpreterContext;
-import com.zck.plsql.antlr.executor.interpreterContext.Scope;
+import com.zck.plsql.antlr.executor.interpreter.InterpreterContext;
+import com.zck.plsql.antlr.executor.interpreter.Scope;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,16 +21,21 @@ public class AnonymousBlock extends Statement {
     private SeqOfStatements seqOfStatements;
     private List<ExceptionHandler> exceptionHandlers;
 
-    public Object stepExecute(InterpreterContext ctx) throws Exception {
-        // 变量作用域
-        ctx.getScopes().push(new Scope());
-        for (ITreeNode node : getChildrens()) {
-            node.stepExecute(ctx);
-        }
-        ctx.getScopes().pop();
+    @Override
+    public Object semanticCheck(SymTab symTab) throws Exception {
+        symTab.push(new HashMap<>());
+        super.semanticCheck(symTab);
+        symTab.pop();
         return null;
     }
 
+    @Override
+    public Object execute(InterpreterContext ctx) throws Exception {
+        ctx.getScopes().push(new Scope());
+        super.execute(ctx);
+        ctx.getScopes().pop();
+        return null;
+    }
 
     @Override
     public Object compileCodeGen(CompilerContext ctx) throws Exception {

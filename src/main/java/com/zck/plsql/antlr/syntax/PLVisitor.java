@@ -5,7 +5,6 @@ import com.zck.plsql.antlr.PlSqlParserBaseVisitor;
 import com.zck.plsql.antlr.syntax.expression.constantExpression.ConstantExpression;
 import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.antlr.syntax.sql.QueryBlock;
-import com.zck.plsql.antlr.intermediate.symtab.SymTab;
 import com.zck.plsql.antlr.syntax.statement.AnonymousBlock;
 import com.zck.plsql.antlr.syntax.statement.AssignmentStatement;
 import com.zck.plsql.antlr.syntax.statement.DeclareSpec;
@@ -18,12 +17,9 @@ import org.antlr.v4.runtime.tree.RuleNode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PLVisitor extends PlSqlParserBaseVisitor {
-
-    private SymTab symTab = new SymTab();
     private String orignStmt;
     // 临时sql变量
     private List<VariableExpression> intoList;
@@ -55,10 +51,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
 
     @Override
     public Object visitAnonymous_block(PlSqlParser.Anonymous_blockContext ctx) {
-        symTab.getStack().push(new HashMap<>());
         AnonymousBlock anonymousBlock = new AnonymousBlock();
         visitChildren(ctx, anonymousBlock);
-        symTab.getStack().pop();
         return anonymousBlock;
     }
 
@@ -81,7 +75,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     public Object visitVariable_declaration(PlSqlParser.Variable_declarationContext ctx) {
         VariableDeclaration variableDeclaration = new VariableDeclaration();
         VariableExpression varExpression = new VariableExpression();
-        varExpression.setName(symTab.getStack().peek(), ctx.identifier().getText());
+        varExpression.setName(ctx.identifier().getText());
         varExpression.setType(ctx.type_spec().getText());
         variableDeclaration.setVarExpression(varExpression);
         if (ctx.default_value_part() != null) {
@@ -156,8 +150,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
             int intoStartIndex = ctx.into_clause().getStart().getStartIndex();
             int intoStopIndex = ctx.into_clause().getStop().getStopIndex();
             queryBlock.setOrignSQL(
-                    this.orignStmt.substring(startIndex, intoStartIndex)
-                            + this.orignStmt.substring(intoStopIndex + 1, stopIndex + 1));
+                    this.orignStmt.substring(startIndex, intoStartIndex) + this.orignStmt.substring(intoStopIndex + 1,
+                            stopIndex + 1));
             return queryBlock;
         } finally {
             this.enterSQL = false;

@@ -7,7 +7,7 @@ import com.zck.plsql.antlr.syntax.ITreeNode;
 import com.zck.plsql.antlr.intermediate.type.TypeSpec;
 
 public class Expression extends ITreeNode {
-    public TypeSpec type;
+    public TypeSpec type = new TypeSpec(Type.NULL);
 
     @Override
     public Object compileCodeGen(CompilerContext ctx) throws Exception {

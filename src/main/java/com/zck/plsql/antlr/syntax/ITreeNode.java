@@ -1,7 +1,8 @@
 package com.zck.plsql.antlr.syntax;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
-import com.zck.plsql.antlr.executor.interpreterContext.InterpreterContext;
+import com.zck.plsql.antlr.executor.interpreter.InterpreterContext;
+import com.zck.plsql.antlr.intermediate.SymTab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,25 @@ public abstract class ITreeNode {
      * 语义检查
      * @return
      */
-    public Object semanticCheck() throws Exception {
+    public Object semanticCheck(SymTab symTab) throws Exception {
         for (ITreeNode node : getChildrens()) {
-            node.semanticCheck();
+            node.semanticCheck(symTab);
         }
         return null;
     };
+
+    /**
+     * 单步解释执行
+     * @param ctx
+     * @return
+     * @throws Exception
+     */
+    public Object stepExec(InterpreterContext ctx)throws Exception {
+        for (ITreeNode node : getChildrens()) {
+            node.stepExec(ctx);
+        }
+        return null;
+    }
 
     /**
      * 解释执行
@@ -29,9 +43,9 @@ public abstract class ITreeNode {
      * @return
      * @throws Exception
      */
-    public Object stepExecute(InterpreterContext ctx)throws Exception {
+    public Object execute(InterpreterContext ctx)throws Exception {
         for (ITreeNode node : getChildrens()) {
-            node.stepExecute(ctx);
+            node.execute(ctx);
         }
         return null;
     }

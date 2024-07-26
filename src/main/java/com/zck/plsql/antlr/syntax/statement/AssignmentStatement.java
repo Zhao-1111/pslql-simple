@@ -1,6 +1,7 @@
 package com.zck.plsql.antlr.syntax.statement;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
+import com.zck.plsql.antlr.intermediate.SymTab;
 import com.zck.plsql.antlr.syntax.expression.Expression;
 import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.antlr.intermediate.type.TypeUtil;
@@ -10,7 +11,9 @@ public class AssignmentStatement extends Statement {
     private Expression ValueExpression;
 
     @Override
-    public Object semanticCheck() throws Exception {
+    public Object semanticCheck(SymTab symTab) throws Exception {
+        variableExpression.semanticCheck(symTab);
+        ValueExpression.semanticCheck(symTab);
         if (!TypeUtil.checkType(variableExpression, ValueExpression)) {
             throw new Exception("type exception");
         }

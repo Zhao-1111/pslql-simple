@@ -1,17 +1,14 @@
-package com.zck.plsql.antlr.executor.interpreterContext;
+package com.zck.plsql.antlr.executor.interpreter;
 
-import com.zck.plsql.antlr.intermediate.CallStack;
 import com.zck.plsql.antlr.syntax.expression.Expression;
 import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 public class InterpreterContext {
     // 变量栈
     private Stack<Scope> scopes = new Stack<>();
-    // 语句栈
+    // 语句栈 for 单步执行
     private CallStack callStack = new CallStack();
 
     public Stack<Scope> getScopes() {
@@ -24,7 +21,6 @@ public class InterpreterContext {
 
     public void put(VariableExpression var, Expression value) {
         scopes.peek().put(var, value);
-        // values.put(var.getName(), value.get)
     }
 
     public Expression get(VariableExpression var) {

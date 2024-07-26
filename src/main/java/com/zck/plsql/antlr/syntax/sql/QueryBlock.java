@@ -1,6 +1,7 @@
 package com.zck.plsql.antlr.syntax.sql;
 
 import com.zck.plsql.antlr.executor.compiler.CompilerContext;
+import com.zck.plsql.antlr.intermediate.SymTab;
 import com.zck.plsql.antlr.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.antlr.syntax.statement.Statement;
 
@@ -14,7 +15,7 @@ public class QueryBlock extends Statement {
     private int selectElements = 0;
 
     @Override
-    public Object semanticCheck() throws Exception {
+    public Object semanticCheck(SymTab symTab) throws Exception {
         if (intoList.size() != selectElements) {
             throw new Exception("intoList exception");
         }
