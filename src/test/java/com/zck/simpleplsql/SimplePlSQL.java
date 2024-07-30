@@ -1,35 +1,12 @@
-package com.zck;
+package com.zck.simpleplsql;
 
 import com.zck.plsql.dispatch.Task;
 import com.zck.plsql.syntax.ITreeNode;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest
-        extends TestCase {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest(String testName) {
-        super(testName);
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite(AppTest.class);
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
+public class SimplePlSQL {
+    @Test
     public void testApp1() {
         /*
         declare
@@ -56,14 +33,13 @@ public class AppTest
             ITreeNode tree = task.parse(str);
             task.semanticCheck(tree);
             task.execute(tree);
-            System.out.println(tree.toString());
         } catch (Exception exception) {
             exception.printStackTrace();
         }
         assertTrue(true);
     }
 
-    // variable redefine check
+    @Test
     public void testApp2() {
         /*
         declare
@@ -95,6 +71,7 @@ public class AppTest
     }
 
     // type  check
+    @Test
     public void testApp3() {
         /*
         declare
@@ -123,6 +100,34 @@ public class AppTest
             }
         }
         assertTrue(false);
+    }
+
+    @Test
+    public void testApp4() {
+        /*
+        declare
+            var1 int := 7;
+            var2 varchar := 'dfs';
+        begin
+            var1 := var2;
+        end;
+         */
+        String str = "declare\n"
+                + "   var1 int := 7;\n"
+                + "   var2 int := 8;\n"
+                + " begin\n"
+                + "   var1 := var2;\n"
+                + "end;";
+        try {
+            Task task = new Task();
+            ITreeNode tree = task.parse(str);
+            task.semanticCheck(tree);
+            task.execute(tree);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            assertTrue(false);
+        }
+        assertTrue(true);
     }
 
 }

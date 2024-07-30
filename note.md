@@ -6,3 +6,8 @@ ps:不行，这样会在生成语法树时处理异常。语义检查应该在sc
 
 ### 2024 726
 1. 将上述在生成语法树的symtab，移动到sc阶段,增加类型的sc阶段检查(类型是否可以被赋值)
+
+### 2024 729
+1. 语句返回null,表达式返回新的表达
+2. 关于赋值，name 对应一个constantValue
+3. 完成execute:variablestmt constantstmt assignment 
