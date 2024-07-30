@@ -28,7 +28,7 @@ public class AnonymousBlock extends Statement {
     }
 
     @Override
-    public Object executeException(InterpreterContext ctx) throws Exception {
+    public Object execute(InterpreterContext ctx) throws Exception {
         ctx.getScopes().push(new Scope());
         super.executeException(ctx);
         ctx.getScopes().pop();

@@ -1,8 +1,16 @@
 package com.zck.plsql.syntax;
 
 import com.zck.plsql.antlr.PlSqlParser;
+import com.zck.plsql.antlr.PlSqlParser.Logical_expressionContext;
+import com.zck.plsql.antlr.PlSqlParser.Simple_case_statementContext;
+import com.zck.plsql.antlr.PlSqlParser.Unary_logical_expressionContext;
 import com.zck.plsql.antlr.PlSqlParserBaseVisitor;
+import com.zck.plsql.syntax.expression.Expression;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
+import com.zck.plsql.syntax.expression.logicalExpression.AndExpression;
+import com.zck.plsql.syntax.expression.logicalExpression.MultisetExpression;
+import com.zck.plsql.syntax.expression.logicalExpression.OrExpression;
+import com.zck.plsql.syntax.expression.logicalExpression.UnaryLogicalExpression;
 import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.syntax.sql.QueryBlock;
 import com.zck.plsql.syntax.statement.AnonymousBlock;
@@ -10,6 +18,7 @@ import com.zck.plsql.syntax.statement.AssignmentStatement;
 import com.zck.plsql.syntax.statement.DeclareSpec;
 import com.zck.plsql.syntax.statement.SeqOfDeclareSpecs;
 import com.zck.plsql.syntax.statement.SeqOfStatements;
+import com.zck.plsql.syntax.statement.SimpleCaseStatement;
 import com.zck.plsql.syntax.statement.VariableDeclaration;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -18,6 +27,7 @@ import org.antlr.v4.runtime.tree.RuleNode;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class PLVisitor extends PlSqlParserBaseVisitor {
     private String orignStmt;
@@ -174,6 +184,72 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     public Object visitTableview_name(PlSqlParser.Tableview_nameContext ctx) {
         tables.add(ctx.getText());
         return null;
+    }
+
+    /**
+     * else语句不是必须
+     *
+     * @param ctx the parse tree
+     * @return
+     */
+    @Override
+    public Object visitSimple_case_statement(Simple_case_statementContext ctx) {
+        SimpleCaseStatement simpleCaseStatement = new SimpleCaseStatement();
+        Expression caseExpr = new Expression();
+        // todo case
+        return simpleCaseStatement;
+    }
+
+    /**
+     * 逻辑表达式,
+     * logical_expression
+     * : unary_logical_expression
+     * | logical_expression AND logical_expression
+     * | logical_expression OR logical_expression
+     * ;
+     *
+     * @param ctx the parse tree
+     * @return
+     */
+    @Override
+    public Object visitLogical_expression(Logical_expressionContext ctx) {
+        // 当前为orExpr
+        if (ctx.OR() != null) {
+            OrExpression orExpression = new OrExpression();
+            orExpression.setLeft((Expression) visit(ctx.logical_expression(0)));
+            orExpression.setRight((Expression) visit(ctx.logical_expression(1)));
+            return orExpression;
+        }
+        // 当前为andExpr
+        if (ctx.AND() != null) {
+            AndExpression andExpression = new AndExpression();
+            andExpression.setLeft((Expression) visit(ctx.logical_expression(0)));
+            andExpression.setRight((Expression) visit(ctx.logical_expression(1)));
+            return andExpression;
+        }
+        // 当前为unaryLoagicalExpr
+        if (ctx.unary_logical_expression() != null) {
+            UnaryLogicalExpression unaryLogicalExpression = (UnaryLogicalExpression) visitUnary_logical_expression(
+                    ctx.unary_logical_expression());
+            return unaryLogicalExpression;
+        }
+        return null;
+    }
+
+    /**
+     * unary_logical_expression
+     * : NOT? multiset_expression unary_logical_operation?
+     * ;
+     *
+     * @param ctx the parse tree
+     * @return
+     */
+    @Override
+    public Object visitUnary_logical_expression(Unary_logical_expressionContext ctx) {
+        UnaryLogicalExpression unaryLogicalExpression = new UnaryLogicalExpression();
+        unaryLogicalExpression.setNot(ctx.NOT() != null);
+        unaryLogicalExpression.setMultisetExpression((MultisetExpression) visit(ctx.multiset_expression()));
+        return unaryLogicalExpression;
     }
 
     // 声明常量节点

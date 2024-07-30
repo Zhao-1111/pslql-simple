@@ -11,3 +11,9 @@ ps:不行，这样会在生成语法树时处理异常。语义检查应该在sc
 1. 语句返回null,表达式返回新的表达
 2. 关于赋值，name 对应一个constantValue
 3. 完成execute:variablestmt constantstmt assignment 
+
+### 2024 730 
+1. 增加sc execute:case, for, if, loop（未完成）
+    1. ps1：目前无表达式，完成上面那些，去写表达式
+    2. ps2：我必须要先完成表达式，才能去完成stmt，否则后续完成expr后需要大改stmt
+2. 完成部分表达式语法树生成 

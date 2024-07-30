@@ -2,7 +2,9 @@ package com.zck.plsql.syntax.statement;
 
 import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.executor.interpreter.InterpreterContext;
+import com.zck.plsql.intermediate.ConstantFactory;
 import com.zck.plsql.intermediate.SymTab;
+import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.syntax.expression.Expression;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
@@ -28,6 +30,7 @@ public class VariableDeclaration extends Statement {
     public Object execute(InterpreterContext ctx) throws Exception {
         ConstantExpression result = null;
         if (valueExpression == null) {
+            result = ConstantFactory.createConstant(Type.NULL);
         } else {
             result = (ConstantExpression) valueExpression.executeException(ctx);
         }
