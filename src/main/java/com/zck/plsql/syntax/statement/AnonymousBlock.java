@@ -4,6 +4,7 @@ import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.intermediate.SymTab;
 import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.executor.interpreter.Scope;
+import com.zck.plsql.syntax.ITreeNode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,9 @@ public class AnonymousBlock extends Statement {
     @Override
     public Object execute(InterpreterContext ctx) throws Exception {
         ctx.getScopes().push(new Scope());
-        super.executeException(ctx);
+        for (ITreeNode node : getChildrens()) {
+            node.executeException(ctx);
+        }
         ctx.getScopes().pop();
         return null;
     }
