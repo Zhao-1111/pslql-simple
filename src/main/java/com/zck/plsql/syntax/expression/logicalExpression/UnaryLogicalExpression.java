@@ -9,7 +9,7 @@ import com.zck.plsql.syntax.expression.Expression;
  */
 public class UnaryLogicalExpression extends Expression {
     private boolean not = false;
-    private MultisetExpression multisetExpression;
+    private Expression multisetExpression;
 
     public boolean isNot() {
         return not;
@@ -19,11 +19,11 @@ public class UnaryLogicalExpression extends Expression {
         this.not = not;
     }
 
-    public MultisetExpression getMultisetExpression() {
+    public Expression getMultisetExpression() {
         return multisetExpression;
     }
 
-    public void setMultisetExpression(MultisetExpression multisetExpreesion) {
+    public void setMultisetExpression(Expression multisetExpreesion) {
         this.multisetExpression = multisetExpreesion;
     }
 }

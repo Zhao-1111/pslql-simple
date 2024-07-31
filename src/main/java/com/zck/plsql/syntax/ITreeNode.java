@@ -3,6 +3,8 @@ package com.zck.plsql.syntax;
 import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.intermediate.SymTab;
+import com.zck.plsql.syntax.expression.Expression;
+import com.zck.plsql.syntax.statement.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +99,36 @@ public abstract class ITreeNode {
 
     public List<ITreeNode> getChildrens() {
         return childrens;
+    }
+
+    /**
+     * 语法树可视化
+     *
+     * @param sb
+     * @param padding
+     * @param pointer
+     */
+    public void toTreeString(StringBuffer sb, String padding, String pointer) {
+        sb.append(padding);
+        sb.append(pointer);
+        sb.append(getClass().getSimpleName());
+        sb.append("\n");
+
+        String paddingForChildren = padding + "│  ";
+        String pointerForLastChild = "└──";
+        String pointerForChild = "├──";
+
+        for (int i = 0; i < childrens.size(); i++) {
+            // 当前只显示statement 和 expression
+            if (childrens.get(i) instanceof Statement || childrens.get(i) instanceof Expression) {
+                ITreeNode child = childrens.get(i);
+                if (i == childrens.size() - 1) {
+                    child.toTreeString(sb, paddingForChildren, pointerForLastChild);
+                } else {
+                    child.toTreeString(sb, paddingForChildren, pointerForChild);
+                }
+            }
+        }
     }
 
 }

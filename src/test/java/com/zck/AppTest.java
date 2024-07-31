@@ -84,6 +84,7 @@ public class AppTest
             ITreeNode tree = task.parse(str);
             task.semanticCheck(tree);
         } catch (Exception exception) {
+            exception.printStackTrace();
             if (exception.getMessage().equals("redefine variable")) {
                 assertTrue(true);
                 return;
@@ -115,6 +116,7 @@ public class AppTest
             ITreeNode tree = task.parse(str);
             task.semanticCheck(tree);
         } catch (Exception exception) {
+            exception.printStackTrace();
             if (exception.getMessage().equals("type exception")) {
                 assertTrue(true);
                 return;

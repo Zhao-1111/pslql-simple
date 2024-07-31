@@ -66,7 +66,7 @@ public class AssignmentStatement extends Statement {
         return ValueExpression;
     }
 
-    public void setValueExpression(VariableExpression valueExpression) {
+    public void setValueExpression(Expression valueExpression) {
         ValueExpression = valueExpression;
     }
 }

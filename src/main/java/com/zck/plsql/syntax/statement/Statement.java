@@ -23,29 +23,6 @@ public class Statement extends ITreeNode {
         return null;
     }
 
-    public void toTreeString(StringBuffer sb, String padding, String pointer) {
-        sb.append(padding);
-        sb.append(pointer);
-        sb.append(getClass().getSimpleName());
-        sb.append("\n");
-
-        String paddingForChildren = padding + "│  ";
-        String pointerForLastChild = "└──";
-        String pointerForChild = "├──";
-
-        for (int i = 0; i < childrens.size(); i++) {
-            // 当前只显示statement
-            if (childrens.get(i) instanceof Statement) {
-                Statement child = (Statement) childrens.get(i);
-                if (i == childrens.size() - 1) {
-                    child.toTreeString(sb, paddingForChildren, pointerForLastChild);
-                } else {
-                    child.toTreeString(sb, paddingForChildren, pointerForChild);
-                }
-            }
-        }
-    }
-
     /**
      * 语句进入是入栈，若栈顶已经为当前语句，则返回false
      *

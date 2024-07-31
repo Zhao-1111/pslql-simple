@@ -8,7 +8,7 @@ import com.zck.plsql.syntax.expression.Expression;
 import java.math.BigDecimal;
 
 public class ConstantExpression extends Expression {
-    protected Object value;
+    private Object value;
 
     /**
      * 获取常量值
@@ -30,9 +30,10 @@ public class ConstantExpression extends Expression {
         }
         if (value instanceof BigDecimal) {
             type = new TypeSpec(Type.DOUBLE);
-        }
-        else if (value instanceof String) {
+        } else if (value instanceof String) {
             type = new TypeSpec(Type.VARCHAR);
+        } else if (value == BooleanValue.TRUE || value == BooleanValue.FALSE) {
+            type = new TypeSpec(Type.BOOL);
         }
         this.value = value;
     }
@@ -40,5 +41,9 @@ public class ConstantExpression extends Expression {
     @Override
     public Object execute(InterpreterContext ctx) throws Exception {
         return this;
+    }
+
+    public enum BooleanValue {
+        TRUE, FALSE
     }
 }

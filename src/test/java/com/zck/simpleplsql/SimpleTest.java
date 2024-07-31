@@ -5,7 +5,7 @@ import com.zck.plsql.syntax.ITreeNode;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-public class SimplePlSQL {
+public class SimpleTest {
     @Test
     public void testApp1() {
         /*
