@@ -4,7 +4,10 @@ import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.intermediate.SymTab;
 import com.zck.plsql.syntax.expression.Expression;
+import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
+import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
 import com.zck.plsql.syntax.statement.Statement;
+import com.zck.plsql.syntax.statement.VariableDeclaration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +114,19 @@ public abstract class ITreeNode {
     public void toTreeString(StringBuffer sb, String padding, String pointer) {
         sb.append(padding);
         sb.append(pointer);
-        sb.append(getClass().getSimpleName());
+        String value = null;
+        if (this instanceof VariableDeclaration) {
+            value = ":" + ((VariableDeclaration) this).getVarExpression().getName();
+        } else if (this instanceof VariableExpression) {
+            value = ":" + ((VariableExpression) this).getName();
+        } else if (this instanceof ConstantExpression) {
+            value = ":" + ((ConstantExpression) this).getConstValue();
+        }
+        if (value != null) {
+            sb.append(getClass().getSimpleName() + value);
+        } else {
+            sb.append(getClass().getSimpleName());
+        }
         sb.append("\n");
 
         String paddingForChildren = padding + "│  ";

@@ -53,7 +53,7 @@ public class VariableDeclaration extends Statement {
         return null;
     }
 
-    public Expression getVarExpression() {
+    public VariableExpression getVarExpression() {
         return varExpression;
     }
 

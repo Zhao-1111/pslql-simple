@@ -19,7 +19,7 @@ public enum UnaryExprOperator {
 
     public static UnaryExprOperator fromString(String input) {
         for (UnaryExprOperator element : UnaryExprOperator.values()) {
-            if (element.operatorStrings.contains(input)) {
+            if (element.operatorStrings.contains(input.toUpperCase())) {
                 return element;
             }
         }

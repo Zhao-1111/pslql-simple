@@ -29,11 +29,11 @@ public class ConstantExpression extends Expression {
             return;
         }
         if (value instanceof BigDecimal) {
-            type = new TypeSpec(Type.DOUBLE);
+            type = new TypeSpec(Type.NUMBER);
         } else if (value instanceof String) {
-            type = new TypeSpec(Type.VARCHAR);
+            type = new TypeSpec(Type.VARCHAR2);
         } else if (value == BooleanValue.TRUE || value == BooleanValue.FALSE) {
-            type = new TypeSpec(Type.BOOL);
+            type = new TypeSpec(Type.BOOLEAN);
         }
         this.value = value;
     }

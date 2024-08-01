@@ -6,6 +6,9 @@ import java.util.List;
 public enum ConcatenationOperator {
     PLUS("+"),
     MINUS("-"),
+    ASTERISK("*"),
+    SOLIDUS("/"),
+    MOD("MOD"),
     BARBAR("||");
 
     private final List<String> operatorStrings;
@@ -20,7 +23,7 @@ public enum ConcatenationOperator {
 
     public static ConcatenationOperator fromString(String input) {
         for (ConcatenationOperator element : ConcatenationOperator.values()) {
-            if (element.operatorStrings.contains(input)) {
+            if (element.operatorStrings.contains(input.toUpperCase())) {
                 return element;
             }
         }

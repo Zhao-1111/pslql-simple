@@ -24,7 +24,7 @@ public enum RelationalExprOperator {
 
     public static RelationalExprOperator fromString(String input) {
         for (RelationalExprOperator element : RelationalExprOperator.values()) {
-            if (element.operatorStrings.contains(input)) {
+            if (element.operatorStrings.contains(input.toUpperCase())) {
                 return element;
             }
         }

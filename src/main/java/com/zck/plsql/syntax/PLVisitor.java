@@ -242,7 +242,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
         }
         // 当前为unaryLoagicalExpr
         if (ctx.unary_logical_expression() != null) {
-            return visitUnary_logical_expression(ctx.unary_logical_expression());
+            return visit(ctx.unary_logical_expression());
         }
         return null;
     }
@@ -346,8 +346,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
             return visit(ctx.model_expression());
         } else {
             Concatenation concatenation = new Concatenation();
-            concatenation.setLeft((Expression) visit(ctx.concatenation(0)));
-            concatenation.setRight((Expression) visit(ctx.concatenation(1)));
+            concatenation.setLeft((Expression) visit(ctx.concatenation(0), concatenation));
+            concatenation.setRight((Expression) visit(ctx.concatenation(1), concatenation));
             if (ctx.BAR(0) != null) {
                 concatenation.setOperator(ConcatenationOperator.BARBAR);
                 return concatenation;

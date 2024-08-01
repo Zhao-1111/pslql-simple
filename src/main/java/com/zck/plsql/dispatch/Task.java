@@ -26,7 +26,7 @@ public class Task {
         SymTab symTab = new SymTab();
         tree.semanticCheck(symTab);
         StringBuffer sb = new StringBuffer();
-        ((Statement) tree).toTreeString(sb, "", "");
+        tree.toTreeString(sb, "", "");
         System.out.println(sb);
     }
 

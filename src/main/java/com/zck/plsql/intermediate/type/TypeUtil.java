@@ -8,36 +8,25 @@ import java.util.Map;
 import java.util.Set;
 
 public class TypeUtil {
-    private static Map<String, Type> map = new HashMap<String, Type>() {{
-        put("BOOLEAN", Type.BOOL);
-        put("INT", Type.INT);
-        put("LONG", Type.LONG);
-        put("DOUBLE", Type.DOUBLE);
-        put("NUMBER", Type.NUMBER);
-        put("VARCHAR", Type.VARCHAR);
-        put("CHAR", Type.CHAR);
-        put("DATE", Type.DATE);
-        put("NULL",Type.NULL);
-    }};
-
     private static Set<Type> boolSet = new HashSet<Type>() {{
-        add(Type.BOOL);
+        add(Type.BOOLEAN);
         add(Type.NULL);
     }};
 
     private static Set<Type> intSet = new HashSet<Type>() {{
-        add(Type.INT);
-        add(Type.LONG);
-        add(Type.DOUBLE);
+        add(Type.BINARY_INTEGER);
+        add(Type.PLS_INTEGER);
+        add(Type.BINARY_DOUBLE);
+        add(Type.BINARY_FLOAT);
         add(Type.NUMBER);
         add(Type.NULL);
     }};
-    private static Set<Type> longSet = intSet;
+    private static Set<Type> floatSet = intSet;
     private static Set<Type> doubleSet = intSet;
     private static Set<Type> numberSet = intSet;
 
     private static Set<Type> varcharSet = new HashSet<Type>() {{
-        add(Type.VARCHAR);
+        add(Type.VARCHAR2);
         add(Type.CHAR);
         add(Type.NULL);
     }};
@@ -49,18 +38,18 @@ public class TypeUtil {
     }};
 
     private static Map<Type, Set<Type>> typeMatchMap = new HashMap<Type, Set<Type>>() {{
-        put(Type.BOOL, boolSet);
-        put(Type.INT, intSet);
-        put(Type.LONG, longSet);
-        put(Type.DOUBLE, doubleSet);
+        put(Type.BOOLEAN, boolSet);
+        put(Type.PLS_INTEGER, intSet);
+        put(Type.BINARY_FLOAT, floatSet);
+        put(Type.BINARY_DOUBLE, doubleSet);
         put(Type.NUMBER, numberSet);
-        put(Type.VARCHAR, varcharSet);
+        put(Type.VARCHAR2, varcharSet);
         put(Type.CHAR, charSet);
         put(Type.DATE, dateSet);
     }};
 
     public static Type getType(String type) {
-        return map.get(type.toUpperCase());
+        return Type.fromString(type);
     }
 
     public static boolean checkType(Expression left, Expression right) {
