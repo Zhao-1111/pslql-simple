@@ -44,6 +44,6 @@ public class ConstantExpression extends Expression {
     }
 
     public enum BooleanValue {
-        TRUE, FALSE
+        TRUE, FALSE, NULL
     }
 }

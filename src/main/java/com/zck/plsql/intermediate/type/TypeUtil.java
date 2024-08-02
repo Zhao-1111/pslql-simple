@@ -7,6 +7,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 是否可以类型转换的判断，
+ * 感觉写得太繁琐了，后续需要优化
+ * 需要的文档
+ *      1.类型之间是否可以转换
+ *      2.类型之间的运算得出的结果类型
+ */
 public class TypeUtil {
     private static Set<Type> boolSet = new HashSet<Type>() {{
         add(Type.BOOLEAN);
@@ -14,7 +21,8 @@ public class TypeUtil {
     }};
 
     private static Set<Type> intSet = new HashSet<Type>() {{
-        add(Type.BINARY_INTEGER);
+        add(Type.FLOAT);
+        add(Type.LONG);
         add(Type.PLS_INTEGER);
         add(Type.BINARY_DOUBLE);
         add(Type.BINARY_FLOAT);
