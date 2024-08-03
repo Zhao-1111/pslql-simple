@@ -12,13 +12,16 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Task {
-    public ITreeNode parse(String str) {
+    public ITreeNode parse(String str) throws Exception {
         PlSqlLexer lexer = new PlSqlLexer(CharStreams.fromString(str));
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         PlSqlParser parser = new PlSqlParser(tokenStream);
         Anonymous_blockContext tree = parser.unit_statement().anonymous_block();
         System.out.println(tree.toStringTree(parser));
         PLVisitor plVisitor = new PLVisitor(str);
+        if (plVisitor.getException()!= null) {
+            throw plVisitor.getException();
+        }
         return (ITreeNode) plVisitor.visitAnonymous_block(tree);
     }
 

@@ -164,9 +164,16 @@ public enum Type {
 
     /**
      * Error Type
+     * For expression operations, when an error should be reported, assign this type
      */
-    Error("ERROR");
+    ERROR("ERROR"),
 
+    /**
+     * Not currently supported
+     * For expression operations, errors should not be reported and the return value type
+     * that has not been implemented should be assigned to that type
+     */
+    NONSUPPORT("NONSUPPORT");
     private final List<String> operatorStrings;
 
     Type(String... operatorStrings) {

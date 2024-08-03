@@ -52,6 +52,11 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     private List<String> tables;
     private List<VariableExpression> ids;
     private boolean enterSQL = false;
+    private Exception exception = null;
+
+    public Exception getException() {
+        return exception;
+    }
 
     public PLVisitor(String orignStmt) {
         this.orignStmt = orignStmt;
@@ -62,6 +67,9 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
         Object node = tree.accept(this);
         if (node instanceof Statement || node instanceof Expression) {
             parent.getChildrens().add((ITreeNode) node);
+        }
+        if (node == null) {
+            this.exception = new Exception(tree.getText()+":Not support");
         }
         return node;
     }
@@ -79,6 +87,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
             if (childResult != null) {
                 // 将子节点按顺序置于节点上，用于后续遍历
                 parent.getChildrens().add(childResult);
+            } else {
+                this.exception = new Exception(c.getText() + ":Not support");
             }
             result = this.aggregateResult(result, childResult);
         }
