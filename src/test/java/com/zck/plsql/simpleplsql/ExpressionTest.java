@@ -1,4 +1,4 @@
-package com.zck.simpleplsql;
+package com.zck.plsql.simpleplsql;
 
 import com.zck.plsql.dispatch.Task;
 import com.zck.plsql.syntax.ITreeNode;

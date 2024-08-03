@@ -1,0 +1,12 @@
+{
+  "LONG": {
+    "NUMBER": "NUMBER",
+    "LONG": "LONG",
+    "PLS_INTEGER": "LONG"
+  },
+  "PLS_INTEGER": {
+    "NUMBER": "NUMBER",
+    "LONG": "LONG",
+    "PLS_INTEGER": "PLS_INTEGER"
+  }
+}

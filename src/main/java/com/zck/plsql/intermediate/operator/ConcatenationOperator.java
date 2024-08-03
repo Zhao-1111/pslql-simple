@@ -1,6 +1,10 @@
 package com.zck.plsql.intermediate.operator;
 
+import com.zck.plsql.intermediate.TypeTansition;
+import com.zck.plsql.intermediate.type.Type;
+
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 
 public enum ConcatenationOperator {
@@ -10,6 +14,13 @@ public enum ConcatenationOperator {
     SOLIDUS("/"),
     MOD("MOD"),
     BARBAR("||");
+
+    private static EnumMap<ConcatenationOperator, TypeTansition> operatorMap
+            = new EnumMap<ConcatenationOperator, TypeTansition>(ConcatenationOperator.class) {{
+        for (ConcatenationOperator value : ConcatenationOperator.values()) {
+            put(value, new TypeTansition(Type.class));
+        }
+    }};
 
     private final List<String> operatorStrings;
 
