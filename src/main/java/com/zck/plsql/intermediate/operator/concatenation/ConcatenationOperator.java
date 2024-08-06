@@ -1,7 +1,8 @@
-package com.zck.plsql.intermediate.operator;
+package com.zck.plsql.intermediate.operator.concatenation;
 
-import com.zck.plsql.intermediate.TypeTansition;
-import com.zck.plsql.intermediate.type.Type;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zck.plsql.intermediate.type.TypeTransition;
+import com.zck.plsql.util.JsonUtil;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -15,10 +16,14 @@ public enum ConcatenationOperator {
     MOD("MOD"),
     BARBAR("||");
 
-    private static EnumMap<ConcatenationOperator, TypeTansition> operatorMap
-            = new EnumMap<ConcatenationOperator, TypeTansition>(ConcatenationOperator.class) {{
+    private static EnumMap<ConcatenationOperator, TypeTransition> operatorMap
+            = new EnumMap<ConcatenationOperator, TypeTransition>(ConcatenationOperator.class) {{
         for (ConcatenationOperator value : ConcatenationOperator.values()) {
-            put(value, new TypeTansition(Type.class));
+            try {
+                put(value, JsonUtil.json2map(value.name()+".json"));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
     }};
 

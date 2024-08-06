@@ -12,9 +12,9 @@ import com.zck.plsql.antlr.PlSqlParser.Simple_case_statementContext;
 import com.zck.plsql.antlr.PlSqlParser.Unary_expressionContext;
 import com.zck.plsql.antlr.PlSqlParser.Unary_logical_expressionContext;
 import com.zck.plsql.antlr.PlSqlParserBaseVisitor;
-import com.zck.plsql.intermediate.operator.ConcatenationOperator;
-import com.zck.plsql.intermediate.operator.RelationalExprOperator;
-import com.zck.plsql.intermediate.operator.UnaryExprOperator;
+import com.zck.plsql.intermediate.operator.concatenation.ConcatenationOperator;
+import com.zck.plsql.intermediate.operator.relationalExpr.RelationalExprOperator;
+import com.zck.plsql.intermediate.operator.unaryExpr.UnaryExprOperator;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.syntax.expression.Expression;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
@@ -480,7 +480,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
         }
         if (ctx.NULL_() != null) {
             // NULL
-            constantExpression.setType(Type.NULL);
+            constantExpression.setType(Type.NULLTYPE);
             return constantExpression;
         }
         if (ctx.TRUE() != null) {

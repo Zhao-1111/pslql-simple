@@ -3,15 +3,16 @@ package com.zck.plsql.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zck.plsql.intermediate.type.Type;
 
-import com.zck.plsql.intermediate.TypeTansition;
+import com.zck.plsql.intermediate.type.TypeTransition;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.EnumMap;
 
 public class JsonUtilTest {
     @Test
     public void test1() throws JsonProcessingException {
-        TypeTansition typetTansition = new TypeTansition(Type.class);
+        TypeTransition typetTansition = new TypeTransition(Type.class);
         typetTansition.put(Type.PLS_INTEGER, new EnumMap<Type, Type>(Type.class) {{
             put(Type.PLS_INTEGER, Type.PLS_INTEGER);
             put(Type.LONG, Type.LONG);
@@ -28,21 +29,21 @@ public class JsonUtilTest {
 
     @Test
     public void test2() throws JsonProcessingException {
-        TypeTansition typeTansition = new TypeTansition(Type.class);
-        typeTansition.put(Type.PLS_INTEGER, new EnumMap<Type, Type>(Type.class) {{
+        TypeTransition typeTransition = new TypeTransition(Type.class);
+        typeTransition.put(Type.PLS_INTEGER, new EnumMap<Type, Type>(Type.class) {{
             put(Type.PLS_INTEGER, Type.PLS_INTEGER);
             put(Type.LONG, Type.LONG);
             put(Type.NUMBER, Type.NUMBER);
         }});
 
-        typeTansition.put(Type.LONG, new EnumMap<Type, Type>(Type.class) {{
+        typeTransition.put(Type.LONG, new EnumMap<Type, Type>(Type.class) {{
             put(Type.PLS_INTEGER, Type.LONG);
             put(Type.LONG, Type.LONG);
             put(Type.NUMBER, Type.NUMBER);
         }});
-        String json = JsonUtil.map2Json(typeTansition);
-        TypeTansition typeTansition1 = JsonUtil.json2map(json);
-        JsonUtil.map2Json(typeTansition);
+        String json = JsonUtil.map2Json(typeTransition);
+        TypeTransition typeTransition1 = JsonUtil.json2map(json);
+        JsonUtil.map2Json(typeTransition);
     }
 
     @Test
@@ -59,7 +60,15 @@ public class JsonUtilTest {
                 + "    \"PLS_INTEGER\": \"PLS_INTEGER\"\n"
                 + "  }\n"
                 + "}\n";
-        TypeTansition typeTansition = JsonUtil.json2map(json);
-        JsonUtil.map2Json(typeTansition);
+        TypeTransition typeTransition = JsonUtil.json2map(json);
+        JsonUtil.map2Json(typeTransition);
+    }
+
+    @Test
+    public void test4() throws IOException {
+        String json = JsonUtil.jsonFile2String(
+                "/Users/zckoon/workspace/procedure-executor/zck/plsql-simple/src/typetransition/output_json/assign.json");
+        TypeTransition typeTransition = JsonUtil.json2map(json);
+        JsonUtil.map2Json(typeTransition);
     }
 }

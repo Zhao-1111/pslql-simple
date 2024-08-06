@@ -20,7 +20,7 @@ public class VariableDeclaration extends Statement {
             throw new Exception("redefine variable");
         }
         symTab.put(varExpression.getName(), varExpression);
-        if (!TypeUtil.checkType(varExpression, valueExpression)) {
+        if (TypeUtil.checkType(varExpression, valueExpression)) {
             throw new Exception("type exception");
         }
         return null;
@@ -30,7 +30,7 @@ public class VariableDeclaration extends Statement {
     public Object execute(InterpreterContext ctx) throws Exception {
         ConstantExpression result = null;
         if (valueExpression == null) {
-            result = ConstantFactory.createConstant(Type.NULL);
+            result = ConstantFactory.createConstant(Type.NULLTYPE);
         } else {
             result = (ConstantExpression) valueExpression.executeException(ctx);
         }

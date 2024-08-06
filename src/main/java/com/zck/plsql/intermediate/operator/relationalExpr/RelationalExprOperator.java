@@ -1,15 +1,20 @@
-package com.zck.plsql.intermediate.operator;
+package com.zck.plsql.intermediate.operator.relationalExpr;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum UnaryExprOperator {
-    NEGATIVE("-"),
-    POSITIVE("+");
+public enum RelationalExprOperator {
+
+    EQUAL("="),
+    NOTEQUAL("!=", "<>", "^=", "~="),
+    LESS("<"),
+    LESSEQUAL("<="),
+    GREATER(">"),
+    GREATEREQUAL(">=");
 
     private final List<String> operatorStrings;
 
-    UnaryExprOperator(String... operatorStrings) {
+    RelationalExprOperator(String... operatorStrings) {
         this.operatorStrings = Arrays.asList(operatorStrings);
     }
 
@@ -17,12 +22,13 @@ public enum UnaryExprOperator {
         return operatorStrings;
     }
 
-    public static UnaryExprOperator fromString(String input) {
-        for (UnaryExprOperator element : UnaryExprOperator.values()) {
+    public static RelationalExprOperator fromString(String input) {
+        for (RelationalExprOperator element : RelationalExprOperator.values()) {
             if (element.operatorStrings.contains(input.toUpperCase())) {
                 return element;
             }
         }
         throw new IllegalArgumentException("No enum constant associated with input string: " + input);
     }
+
 }

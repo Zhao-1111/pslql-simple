@@ -157,10 +157,13 @@ public enum Type {
      */
     PLS_INTEGER("BINARY_INTEGER", "PLS_INTEGER", "NATURAL", "NATURALN", "POSITIVE", "POSITIVEN", "SIGNTYPE",
             "SIMPLE_INTEGER", "INTEGER", "INT", "SMALLINT"),
+
     /**
-     * Null type
+     * Not currently supported
+     * For expression operations, errors should not be reported.
+     * And the return value type that has not been implemented should be assigned to that type
      */
-    NULL("NULL"),
+    NONSUPPORT("NONSUPPORT"),
 
     /**
      * Error Type
@@ -169,11 +172,9 @@ public enum Type {
     ERROR("ERROR"),
 
     /**
-     * Not currently supported
-     * For expression operations, errors should not be reported and the return value type
-     * that has not been implemented should be assigned to that type
+     * Null type
      */
-    NONSUPPORT("NONSUPPORT");
+    NULLTYPE("NULL");
     private final List<String> operatorStrings;
 
     Type(String... operatorStrings) {

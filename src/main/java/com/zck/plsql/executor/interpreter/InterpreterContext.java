@@ -34,7 +34,7 @@ public class InterpreterContext {
                 }
             }
         }
-        return ConstantFactory.createConstant(Type.NULL);
+        return ConstantFactory.createConstant(Type.NULLTYPE);
     }
     public Expression get(VariableExpression var) {
         Expression res = null;
