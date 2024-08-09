@@ -12,7 +12,9 @@ import com.zck.plsql.antlr.PlSqlParser.Simple_case_statementContext;
 import com.zck.plsql.antlr.PlSqlParser.Unary_expressionContext;
 import com.zck.plsql.antlr.PlSqlParser.Unary_logical_expressionContext;
 import com.zck.plsql.antlr.PlSqlParserBaseVisitor;
+import com.zck.plsql.intermediate.operator.AndExprOperator;
 import com.zck.plsql.intermediate.operator.ConcatenationOperator;
+import com.zck.plsql.intermediate.operator.OrExprOperator;
 import com.zck.plsql.intermediate.operator.RelationalExprOperator;
 import com.zck.plsql.intermediate.operator.UnaryExprOperator;
 import com.zck.plsql.intermediate.type.Type;
@@ -62,18 +64,27 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
         this.orignStmt = orignStmt;
     }
 
-    //
+    /**
+     * 用以遍历表达式和语句时，并将改表达式挂载在父节点上
+     */
     public Object visit(ParseTree tree, ITreeNode parent) {
-        Object node = tree.accept(this);
-        if (node instanceof Statement || node instanceof Expression) {
-            parent.getChildrens().add((ITreeNode) node);
+        if (tree == null) {
+            return null;
         }
+        Object node = tree.accept(this);
         if (node == null) {
-            this.exception = new Exception(tree.getText()+":Not support");
+            this.exception = new Exception(tree.getText() + ":Not support");
+        }
+        if (node instanceof Statement || node instanceof Expression) {
+            // 将子节点按顺序置于节点上，用于后续遍历
+            parent.getChildrens().add((ITreeNode) node);
         }
         return node;
     }
 
+    /**
+     * 用以遍历语句时，将子语句挂载在父节点上
+     */
     public Object visitChildren(RuleNode node, ITreeNode parent) {
         if (node == null) {
             return null;
@@ -93,6 +104,13 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
             result = this.aggregateResult(result, childResult);
         }
         return result;
+    }
+
+    public boolean isEmpty(Object o) {
+        if (o == null) {
+            return true;
+        }
+        return o instanceof List && ((List<?>) o).isEmpty();
     }
 
     @Override
@@ -124,7 +142,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
         varExpression.setName(ctx.identifier().getText());
         varExpression.setType(ctx.type_spec().getText());
         variableDeclaration.setVarExpression(varExpression);
-        if (ctx.default_value_part() != null) {
+        if (!isEmpty(ctx.default_value_part())) {
             variableDeclaration.setValueExpression(
                     (Expression) visit(ctx.default_value_part().expression(), variableDeclaration));
         }
@@ -237,21 +255,23 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     @Override
     public Object visitLogical_expression(Logical_expressionContext ctx) {
         // 当前为orExpr
-        if (ctx.OR() != null) {
+        if (!isEmpty(ctx.OR())) {
             OrExpression orExpression = new OrExpression();
             orExpression.setLeft((Expression) visit(ctx.logical_expression(0), orExpression));
             orExpression.setRight((Expression) visit(ctx.logical_expression(1), orExpression));
+            orExpression.setOperator(OrExprOperator.OR);
             return orExpression;
         }
         // 当前为andExpr
-        if (ctx.AND() != null) {
+        if (!isEmpty(ctx.AND())) {
             AndExpression andExpression = new AndExpression();
             andExpression.setLeft((Expression) visit(ctx.logical_expression(0), andExpression));
             andExpression.setRight((Expression) visit(ctx.logical_expression(1), andExpression));
+            andExpression.setOperator(AndExprOperator.AND);
             return andExpression;
         }
         // 当前为unaryLoagicalExpr
-        if (ctx.unary_logical_expression() != null) {
+        if (!isEmpty(ctx.unary_logical_expression())) {
             return visit(ctx.unary_logical_expression());
         }
         return null;
@@ -268,7 +288,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     @Override
     public Object visitUnary_logical_expression(Unary_logical_expressionContext ctx) {
         UnaryLogicalExpression unaryLogicalExpression = new UnaryLogicalExpression();
-        unaryLogicalExpression.setNot(ctx.NOT() != null);
+        unaryLogicalExpression.setNot(!isEmpty(ctx.NOT()));
         unaryLogicalExpression.setMultisetExpression(
                 (Expression) visit(ctx.multiset_expression(), unaryLogicalExpression));
         return unaryLogicalExpression;
@@ -289,7 +309,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     @Override
     public Object visitMultiset_expression(Multiset_expressionContext ctx) {
         MultisetExpression multisetExpression = new MultisetExpression();
-        multisetExpression.setRelationalExpression((Expression) visit(ctx.relational_expression(), multisetExpression));
+        multisetExpression.setExpr((Expression) visit(ctx.relational_expression(), multisetExpression));
         return multisetExpression;
     }
 
@@ -304,12 +324,12 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
      */
     @Override
     public Object visitRelational_expression(Relational_expressionContext ctx) {
-        if (ctx.relational_operator() != null) {
+        if (!isEmpty(ctx.relational_operator())) {
             RelationalExpression relationalExpression = new RelationalExpression();
             relationalExpression.setLeft((Expression) visit(ctx.relational_expression(0), relationalExpression));
             relationalExpression.setRight((Expression) visit(ctx.relational_expression(1), relationalExpression));
             String operator = ctx.relational_operator().getText();
-            relationalExpression.setExprOperator(RelationalExprOperator.fromString(operator));
+            relationalExpression.setOperator(RelationalExprOperator.fromString(operator));
             return relationalExpression;
         } else {
             return visit(ctx.compound_expression());
@@ -352,16 +372,16 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
      */
     @Override
     public Object visitConcatenation(ConcatenationContext ctx) {
-        if (ctx.model_expression() != null) {
+        if (!isEmpty(ctx.model_expression())) {
             return visit(ctx.model_expression());
         } else {
             Concatenation concatenation = new Concatenation();
             concatenation.setLeft((Expression) visit(ctx.concatenation(0), concatenation));
             concatenation.setRight((Expression) visit(ctx.concatenation(1), concatenation));
-            if (ctx.BAR(0) != null) {
+            if (!isEmpty(ctx.BAR(0))) {
                 concatenation.setOperator(ConcatenationOperator.BARBAR);
                 return concatenation;
-            } else if (ctx.op != null) {
+            } else if (!isEmpty(ctx.op)) {
                 concatenation.setOperator(ConcatenationOperator.fromString(ctx.op.getText()));
                 return concatenation;
             }
@@ -380,8 +400,8 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     @Override
     public Object visitModel_expression(Model_expressionContext ctx) {
         ModelExpression modelExpression = new ModelExpression();
-        modelExpression.setUnaryExpr((Expression) visit(ctx.unary_expression(), modelExpression));
-        return super.visitModel_expression(ctx);
+        modelExpression.setExpr((Expression) visit(ctx.unary_expression(), modelExpression));
+        return modelExpression;
     }
 
     /**
@@ -392,19 +412,21 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
      */
     @Override
     public Object visitUnary_expression(Unary_expressionContext ctx) {
-        if (ctx.atom() != null) {
+        if (!isEmpty(ctx.atom())) {
             return visit(ctx.atom());
         } else {
             UnaryExpression unaryExpression = new UnaryExpression();
-            unaryExpression.setExpression((Expression) visit(ctx.unary_expression(), unaryExpression));
-            if (ctx.PLUS_SIGN() != null) {
-                unaryExpression.setUnaryExprOperator(UnaryExprOperator.POSITIVE);
+            unaryExpression.setExpr((Expression) visit(ctx.unary_expression(), unaryExpression));
+            if (!isEmpty(ctx.PLUS_SIGN())) {
+                unaryExpression.setOperator(UnaryExprOperator.POSITIVE);
                 return unaryExpression;
-            } else if (ctx.MINUS_SIGN() != null) {
-                unaryExpression.setUnaryExprOperator(UnaryExprOperator.NEGATIVE);
+            } else if (!isEmpty(ctx.MINUS_SIGN())) {
+                unaryExpression.setOperator(UnaryExprOperator.NEGATIVE);
+                return unaryExpression;
+            } else {
+                unaryExpression.setOperator(UnaryExprOperator.POSITIVE);
                 return unaryExpression;
             }
-            return null;
         }
     }
 
@@ -423,13 +445,13 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
      */
     @Override
     public Object visitAtom(AtomContext ctx) {
-        if (ctx.constant() != null) {
+        if (!isEmpty(ctx.constant())) {
             return visit(ctx.constant());
         }
-        if (ctx.general_element() != null) {
+        if (!isEmpty(ctx.general_element())) {
             return visit(ctx.general_element());
         }
-        if (ctx.expressions() != null) {
+        if (!isEmpty(ctx.expressions())) {
             // todo 当前先认为仅有一个
             return visit(ctx.expressions().expression(0));
         }
@@ -468,24 +490,30 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     @Override
     public Object visitConstant(PlSqlParser.ConstantContext ctx) {
         ConstantExpression constantExpression = new ConstantExpression();
-        if (ctx.numeric() != null) {
+        if (!isEmpty(ctx.numeric())) {
             // 数值类型常量
             constantExpression.setConstValue(new BigDecimal(ctx.numeric().getText()));
             return constantExpression;
         }
-        if (ctx.quoted_string() != null) {
+        if (!isEmpty(ctx.quoted_string())) {
             // 字符类型
             constantExpression.setConstValue(ctx.getText());
             return constantExpression;
         }
-        if (ctx.NULL_() != null) {
+        if (!isEmpty(ctx.NULL_())) {
             // NULL
             constantExpression.setType(Type.NULLTYPE);
             return constantExpression;
         }
-        if (ctx.TRUE() != null) {
+        if (!isEmpty(ctx.TRUE())) {
+            // 布尔类型
             constantExpression.setConstValue(BooleanValue.TRUE);
-            return null;
+            return constantExpression;
+        }
+        if (!isEmpty(ctx.FALSE())) {
+            // 布尔类型
+            constantExpression.setConstValue(BooleanValue.FALSE);
+            return constantExpression;
         }
         return constantExpression;
     }

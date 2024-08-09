@@ -2,7 +2,6 @@ package com.zck.plsql.syntax.expression;
 
 import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.intermediate.type.Type;
-import com.zck.plsql.intermediate.type.TypeUtil;
 import com.zck.plsql.syntax.ITreeNode;
 import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
 
@@ -33,7 +32,7 @@ public class Expression extends ITreeNode {
     }
 
     public void setType(String type) {
-        this.type = TypeUtil.getType(type);
+        this.type = Type.fromString(type);
     }
 
     public void setType(VariableExpression variableExpression){

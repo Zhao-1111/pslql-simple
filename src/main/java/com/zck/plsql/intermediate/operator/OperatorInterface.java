@@ -15,6 +15,8 @@ public interface OperatorInterface {
 
     List<String> getOperatorStrings();
 
+    <E extends Enum<E> & OperatorInterface> EnumMap<E, TypeTransition> getOperatorMap();
+
     static <E extends Enum<E> & OperatorInterface> EnumMap<E, TypeTransition> initializeOperatorMap(
             Class<E> enumClass) {
         EnumMap<E, TypeTransition> operatorMap = new EnumMap<>(enumClass);
@@ -38,12 +40,11 @@ public interface OperatorInterface {
         throw new IllegalArgumentException("No enum constant associated with input string: " + input);
     }
 
-    static <E extends Enum<E> & OperatorInterface> boolean checkType(Type left, Type right, E op,
-            EnumMap<E, TypeTransition> operatorMap) throws Exception {
-        if (!operatorMap.containsKey(op)) {
+    static <E extends Enum<E> & OperatorInterface> boolean checkType(Type left, Type right, E op) throws Exception {
+        if (!op.getOperatorMap().containsKey(op)) {
             throw new Exception("operator error");
         }
-        TypeTransition typeTransition = operatorMap.get(op);
+        TypeTransition typeTransition = op.getOperatorMap().get(op);
         if (typeTransition == null) {
             throw new Exception("operator error");
         }
@@ -60,11 +61,23 @@ public interface OperatorInterface {
         return false;
     }
 
-    static <E extends Enum<E> & OperatorInterface> Type castType(Type left, Type right, E op,
-            EnumMap<E, TypeTransition> operatorMap) throws Exception {
-        if(checkType(left, right, op, operatorMap)) {
+    static <E extends Enum<E> & OperatorInterface> boolean checkType(Type type, E op) throws Exception {
+        return checkType(type, Type.NULLTYPE, op);
+    }
+
+    static <E extends Enum<E> & OperatorInterface> Type castType(Type left, Type right, E op) throws Exception {
+        if (left == null || right == null || op == null) {
+            return Type.ERROR;
+        }
+        EnumMap<E, TypeTransition> operatorMap = op.getOperatorMap();
+        if (checkType(left, right, op)) {
             return operatorMap.get(op).get(left).get(right);
         }
         return Type.ERROR;
     }
+
+    static <E extends Enum<E> & OperatorInterface> Type castType(Type type, E op) throws Exception {
+        return castType(type, Type.NULLTYPE, op);
+    }
+
 }

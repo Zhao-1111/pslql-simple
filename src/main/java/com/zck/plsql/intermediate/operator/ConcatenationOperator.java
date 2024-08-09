@@ -1,6 +1,5 @@
 package com.zck.plsql.intermediate.operator;
 
-import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeTransition;
 
 import java.util.Arrays;
@@ -30,11 +29,12 @@ public enum ConcatenationOperator implements OperatorInterface {
         return operatorStrings;
     }
 
-    public static ConcatenationOperator fromString(String input) {
-        return OperatorInterface.fromString(input, ConcatenationOperator.class);
+    @Override
+    public EnumMap<ConcatenationOperator, TypeTransition> getOperatorMap() {
+        return operatorMap;
     }
 
-    public static Boolean checkType(Type left, Type right, ConcatenationOperator op) throws Exception {
-        return OperatorInterface.checkType(left, right, op, operatorMap);
+    public static ConcatenationOperator fromString(String input) {
+        return OperatorInterface.fromString(input, ConcatenationOperator.class);
     }
 }

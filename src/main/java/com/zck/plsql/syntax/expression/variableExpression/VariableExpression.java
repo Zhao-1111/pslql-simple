@@ -4,7 +4,6 @@ import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.intermediate.SymTab;
 import com.zck.plsql.syntax.ITreeNode;
 import com.zck.plsql.syntax.expression.Expression;
-import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 
 import java.util.Map;
 

@@ -1,6 +1,5 @@
 package com.zck.plsql.intermediate.operator;
 
-import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeTransition;
 
 import java.util.Arrays;
@@ -21,15 +20,15 @@ public enum AssignOperator implements OperatorInterface {
 
     @Override
     public List<String> getOperatorStrings() {
-
         return operatorStrings;
+    }
+
+    @Override
+    public EnumMap<AssignOperator, TypeTransition> getOperatorMap() {
+        return operatorMap;
     }
 
     public static AssignOperator fromString(String input) {
         return OperatorInterface.fromString(input, AssignOperator.class);
-    }
-
-    public static Boolean checkType(Type left, Type right, AssignOperator op) throws Exception {
-        return OperatorInterface.checkType(left, right, op, operatorMap);
     }
 }

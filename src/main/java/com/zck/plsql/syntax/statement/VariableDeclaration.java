@@ -4,11 +4,12 @@ import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.intermediate.ConstantFactory;
 import com.zck.plsql.intermediate.SymTab;
+import com.zck.plsql.intermediate.operator.AssignOperator;
+import com.zck.plsql.intermediate.operator.OperatorInterface;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.syntax.expression.Expression;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
-import com.zck.plsql.intermediate.type.TypeUtil;
 
 public class VariableDeclaration extends Statement {
     private VariableExpression varExpression;
@@ -20,10 +21,10 @@ public class VariableDeclaration extends Statement {
             throw new Exception("redefine variable");
         }
         symTab.put(varExpression.getName(), varExpression);
-        if(valueExpression == null) {
+        if (valueExpression == null) {
             valueExpression = ConstantFactory.createConstant(Type.NULLTYPE);
         }
-        if (!TypeUtil.checkType(varExpression, valueExpression)) {
+        if (!OperatorInterface.checkType(varExpression.getType(), valueExpression.getType(), AssignOperator.ASSIGN)) {
             throw new Exception("type exception");
         }
         return null;

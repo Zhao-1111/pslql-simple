@@ -3,10 +3,11 @@ package com.zck.plsql.syntax.statement;
 import com.zck.plsql.executor.compiler.CompilerContext;
 import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.intermediate.SymTab;
+import com.zck.plsql.intermediate.operator.AssignOperator;
+import com.zck.plsql.intermediate.operator.OperatorInterface;
 import com.zck.plsql.syntax.expression.Expression;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
-import com.zck.plsql.intermediate.type.TypeUtil;
 import com.zck.plsql.util.Mylogger;
 
 /**
@@ -21,7 +22,8 @@ public class AssignmentStatement extends Statement {
     public Object semanticCheck(SymTab symTab) throws Exception {
         variableExpression.semanticCheck(symTab);
         ValueExpression.semanticCheck(symTab);
-        if (!TypeUtil.checkType(variableExpression, ValueExpression)) {
+        if (!OperatorInterface.checkType(variableExpression.getType(), ValueExpression.getType(),
+                AssignOperator.ASSIGN)) {
             throw new Exception("type exception");
         }
         return null;
@@ -30,7 +32,7 @@ public class AssignmentStatement extends Statement {
     @Override
     public Object execute(InterpreterContext ctx) throws Exception {
         ConstantExpression right = (ConstantExpression) ValueExpression.execute(ctx);
-        if (!TypeUtil.checkType(variableExpression, right)) {
+        if (!OperatorInterface.checkType(variableExpression.getType(), right.getType(), AssignOperator.ASSIGN)) {
             throw new Exception("type Exception");
         } else {
             ctx.enterVarValue(variableExpression, right);

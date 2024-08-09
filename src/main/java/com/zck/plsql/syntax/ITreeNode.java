@@ -20,6 +20,7 @@ public abstract class ITreeNode {
 
     /**
      * 语义检查
+     * 需要保证语句和表达式，都挂在对应节点的List中
      *
      * @return
      */

@@ -1,8 +1,5 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
-import com.zck.plsql.intermediate.operator.RelationalExprOperator;
-import com.zck.plsql.syntax.expression.Expression;
-
 /**
  * rule1
  * relational_expression
@@ -17,28 +14,6 @@ import com.zck.plsql.syntax.expression.Expression;
  * | ('<' | '>') '='?
  * ;
  */
-public class RelationalExpression extends Expression {
+public class RelationalExpression extends LogicalBinaryExpression {
 
-    private RelationalExprOperator exprOperator;
-    private Expression left, right;
-
-    public void setExprOperator(RelationalExprOperator exprOperator) {
-        this.exprOperator = exprOperator;
-    }
-
-    public Expression getLeft() {
-        return left;
-    }
-
-    public void setLeft(Expression left) {
-        this.left = left;
-    }
-
-    public Expression getRight() {
-        return right;
-    }
-
-    public void setRight(Expression right) {
-        this.right = right;
-    }
 }

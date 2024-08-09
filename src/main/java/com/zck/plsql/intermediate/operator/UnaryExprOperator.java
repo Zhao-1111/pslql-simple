@@ -1,6 +1,5 @@
 package com.zck.plsql.intermediate.operator;
 
-import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeTransition;
 
 import java.util.Arrays;
@@ -22,19 +21,16 @@ public enum UnaryExprOperator implements OperatorInterface{
 
     @Override
     public List<String> getOperatorStrings() {
-
         return operatorStrings;
+    }
+
+    @Override
+    public EnumMap<UnaryExprOperator, TypeTransition> getOperatorMap() {
+        return operatorMap;
     }
 
     public static RelationalExprOperator fromString(String input) {
         return OperatorInterface.fromString(input, RelationalExprOperator.class);
     }
 
-    public static Boolean checkType(Type left, Type right, UnaryExprOperator op) throws Exception {
-        return OperatorInterface.checkType(left, right, op, operatorMap);
-    }
-    // 一元表达式，认为是特殊的二元表达式，第二个操作符号，认为其为Type.NULLTYPE
-    public static Boolean checkType(Type type, UnaryExprOperator op) throws Exception {
-        return checkType(type, Type.NULLTYPE, op);
-    }
 }

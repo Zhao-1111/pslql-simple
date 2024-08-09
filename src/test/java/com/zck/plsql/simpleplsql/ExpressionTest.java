@@ -27,4 +27,24 @@ public class ExpressionTest {
         }
         assertTrue(true);
     }
+
+    @Test
+    public void test1() {
+        String str =
+                "declare\n"
+                + "    var2 boolean := true;\n"
+                + "begin\n"
+                + "    var2 := var2 and var2;\n"
+                + "end;";
+        try {
+            Task task = new Task();
+            ITreeNode tree = task.parse(str);
+            task.semanticCheck(tree);
+            // task.execute(tree);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            assertTrue(false);
+        }
+        assertTrue(true);
+    }
 }

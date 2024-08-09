@@ -6,20 +6,20 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
-public enum AndExprOperator implements OperatorInterface {
-    AND("AND");
+public enum OrExprOperator implements OperatorInterface{
+    OR("OR");
 
-    private static final EnumMap<AndExprOperator, TypeTransition> operatorMap
-            = OperatorInterface.initializeOperatorMap(AndExprOperator.class);
+    private static final EnumMap<OrExprOperator, TypeTransition> operatorMap
+            = OperatorInterface.initializeOperatorMap(OrExprOperator.class);
 
     private final List<String> operatorStrings;
 
     @Override
-    public EnumMap<AndExprOperator, TypeTransition> getOperatorMap() {
+    public EnumMap<OrExprOperator, TypeTransition> getOperatorMap() {
         return operatorMap;
     }
 
-    AndExprOperator(String... operatorStrings) {
+    OrExprOperator(String... operatorStrings) {
         this.operatorStrings = Arrays.asList(operatorStrings);
     }
 
