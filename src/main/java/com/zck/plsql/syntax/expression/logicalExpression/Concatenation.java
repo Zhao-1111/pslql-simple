@@ -1,6 +1,7 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
-import com.zck.plsql.intermediate.operator.concatenation.ConcatenationOperator;
+import com.zck.plsql.intermediate.SymTab;
+import com.zck.plsql.intermediate.operator.ConcatenationOperator;
 import com.zck.plsql.syntax.expression.Expression;
 
 /**
@@ -18,6 +19,11 @@ import com.zck.plsql.syntax.expression.Expression;
 public class Concatenation extends Expression {
     Expression left, right;
     ConcatenationOperator operator;
+
+    @Override
+    public Object semanticCheck(SymTab symTab) throws Exception {
+        return super.semanticCheck(symTab);
+    }
 
     public Expression getLeft() {
         return left;

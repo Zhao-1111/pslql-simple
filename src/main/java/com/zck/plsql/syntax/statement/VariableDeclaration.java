@@ -20,7 +20,10 @@ public class VariableDeclaration extends Statement {
             throw new Exception("redefine variable");
         }
         symTab.put(varExpression.getName(), varExpression);
-        if (TypeUtil.checkType(varExpression, valueExpression)) {
+        if(valueExpression == null) {
+            valueExpression = ConstantFactory.createConstant(Type.NULLTYPE);
+        }
+        if (!TypeUtil.checkType(varExpression, valueExpression)) {
             throw new Exception("type exception");
         }
         return null;

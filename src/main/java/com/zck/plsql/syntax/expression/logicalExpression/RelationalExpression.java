@@ -1,6 +1,6 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
-import com.zck.plsql.intermediate.operator.relationalExpr.RelationalExprOperator;
+import com.zck.plsql.intermediate.operator.RelationalExprOperator;
 import com.zck.plsql.syntax.expression.Expression;
 
 /**

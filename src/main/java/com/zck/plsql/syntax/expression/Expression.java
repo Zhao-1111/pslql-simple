@@ -1,13 +1,14 @@
 package com.zck.plsql.syntax.expression;
 
 import com.zck.plsql.executor.compiler.CompilerContext;
+import com.zck.plsql.intermediate.operator.OperatorInterface;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeUtil;
 import com.zck.plsql.syntax.ITreeNode;
-import com.zck.plsql.intermediate.type.TypeSpec;
+import com.zck.plsql.syntax.expression.variableExpression.VariableExpression;
 
 public class Expression extends ITreeNode {
-    protected TypeSpec type = new TypeSpec(Type.NULLTYPE);
+    protected Type type = Type.NULLTYPE;
 
     @Override
     public Object compileCodeGen(CompilerContext ctx) throws Exception {
@@ -24,16 +25,20 @@ public class Expression extends ITreeNode {
         return null;
     }
 
-    public TypeSpec getType() {
+    public Type getType() {
         return type;
     }
 
     public void setType(Type type) {
-        this.type = new TypeSpec(type);
+        this.type = type;
     }
 
     public void setType(String type) {
-        Type plType = TypeUtil.getType(type);
-        this.type = new TypeSpec(plType);
+        this.type = TypeUtil.getType(type);
     }
+
+    public void setType(VariableExpression variableExpression){
+        this.type = variableExpression.getType();
+    }
+
 }

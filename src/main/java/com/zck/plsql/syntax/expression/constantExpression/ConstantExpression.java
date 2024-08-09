@@ -2,7 +2,6 @@ package com.zck.plsql.syntax.expression.constantExpression;
 
 import com.zck.plsql.executor.interpreter.InterpreterContext;
 import com.zck.plsql.intermediate.type.Type;
-import com.zck.plsql.intermediate.type.TypeSpec;
 import com.zck.plsql.syntax.expression.Expression;
 
 import java.math.BigDecimal;
@@ -29,11 +28,11 @@ public class ConstantExpression extends Expression {
             return;
         }
         if (value instanceof BigDecimal) {
-            type = new TypeSpec(Type.NUMBER);
+            type = Type.NUMBER;
         } else if (value instanceof String) {
-            type = new TypeSpec(Type.VARCHAR2);
+            type = Type.VARCHAR2;
         } else if (value == BooleanValue.TRUE || value == BooleanValue.FALSE) {
-            type = new TypeSpec(Type.BOOLEAN);
+            type = Type.BOOLEAN;
         }
         this.value = value;
     }

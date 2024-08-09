@@ -6,9 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.zck.plsql.intermediate.type.TypeTransition;
 import com.zck.plsql.intermediate.type.Type;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class JsonUtil {
     public static String map2Json(TypeTransition typetTansition) throws JsonProcessingException {
@@ -38,11 +41,16 @@ public class JsonUtil {
     }
 
     public static String jsonFile2String(String path) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        // 读取JSON文件
-        File jsonFile = new File(path);
-        // 将JSON文件转换为字符串
-        return mapper.readTree(jsonFile).toString();
+        ClassLoader classLoader = JsonUtil.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(path);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found: " + path);
+        }
+        // 将 InputStream 转换为 String
+        return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+    }
 
+    public static TypeTransition jsonFile2map(String path) throws IOException {
+        return json2map(jsonFile2String(path));
     }
 }

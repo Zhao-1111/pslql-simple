@@ -1,9 +1,24 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
+import com.zck.plsql.intermediate.SymTab;
+import com.zck.plsql.intermediate.operator.AndExprOperator;
+import com.zck.plsql.intermediate.type.Type;
+import com.zck.plsql.intermediate.type.TypeUtil;
 import com.zck.plsql.syntax.expression.Expression;
 
 public class AndExpression extends Expression {
     private Expression left, right;
+
+    private AndExprOperator andExprOperator = AndExprOperator.AND;
+
+    @Override
+    public Object semanticCheck(SymTab symTab) throws Exception {
+        super.semanticCheck(symTab);
+        if (TypeUtil.checkType(left, right)) {
+            setType(AndExprOperator.castType(left.getType(), right.getType(), andExprOperator));
+        }
+        return null;
+    }
 
     public Expression getLeft() {
         return left;

@@ -1,0 +1,122 @@
+{
+    "VARCHAR2": {
+        "VARCHAR2": "VARCHAR2",
+        "CHAR": "VARCHAR2",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "CHAR": {
+        "VARCHAR2": "VARCHAR2",
+        "CHAR": "VARCHAR2",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "NUMBER": {
+        "VARCHAR2": "ERROR",
+        "CHAR": "ERROR",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "BINARY_DOUBLE": {
+        "VARCHAR2": "ERROR",
+        "CHAR": "ERROR",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "LONG": {
+        "VARCHAR2": "ERROR",
+        "CHAR": "ERROR",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "PLS_INTEGER": {
+        "VARCHAR2": "ERROR",
+        "CHAR": "ERROR",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "BOOLEAN": {
+        "VARCHAR2": "ERROR",
+        "CHAR": "ERROR",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "BOOLEAN",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "ERROR": {
+        "VARCHAR2": "ERROR",
+        "CHAR": "ERROR",
+        "NUMBER": "ERROR",
+        "BINARY_DOUBLE": "ERROR",
+        "LONG": "ERROR",
+        "PLS_INTEGER": "ERROR",
+        "BOOLEAN": "ERROR",
+        "ERROR": "ERROR",
+        "NULLTYPE": "ERROR",
+        "NONSUPPORT": "ERROR"
+    },
+    "NULLTYPE": {
+        "VARCHAR2": "NULLTYPE",
+        "CHAR": "NULLTYPE",
+        "NUMBER": "NULLTYPE",
+        "BINARY_DOUBLE": "NULLTYPE",
+        "LONG": "NULLTYPE",
+        "PLS_INTEGER": "NULLTYPE",
+        "BOOLEAN": "NULLTYPE",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NULLTYPE",
+        "NONSUPPORT": "NONSUPPORT"
+    },
+    "NONSUPPORT": {
+        "VARCHAR2": "NONSUPPORT",
+        "CHAR": "NONSUPPORT",
+        "NUMBER": "NONSUPPORT",
+        "BINARY_DOUBLE": "NONSUPPORT",
+        "LONG": "NONSUPPORT",
+        "PLS_INTEGER": "NONSUPPORT",
+        "BOOLEAN": "NONSUPPORT",
+        "ERROR": "ERROR",
+        "NULLTYPE": "NONSUPPORT",
+        "NONSUPPORT": "NONSUPPORT"
+    }
+}

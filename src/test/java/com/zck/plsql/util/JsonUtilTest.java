@@ -71,4 +71,6 @@ public class JsonUtilTest {
         TypeTransition typeTransition = JsonUtil.json2map(json);
         JsonUtil.map2Json(typeTransition);
     }
+
+
 }

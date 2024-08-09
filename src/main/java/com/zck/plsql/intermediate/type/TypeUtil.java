@@ -9,13 +9,13 @@ public class TypeUtil {
     }
 
     public static boolean checkType(Expression left, Expression right) throws Exception {
-        TypeSpec leftType = left.getType();
-        TypeSpec rightType = null;
+        Type leftType = left.getType();
+        Type rightType = null;
         if (right == null || right.getType() == null) {
             return false;
         } else {
             rightType = right.getType();
         }
-        return AssignOperator.assignCheckType(leftType.getType(), rightType.getType());
+        return AssignOperator.checkType(leftType, rightType, AssignOperator.ASSIGN);
     }
 }

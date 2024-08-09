@@ -1,35 +1,35 @@
 package com.zck.plsql.intermediate.operator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeTransition;
-import com.zck.plsql.util.JsonUtil;
 
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 
-public class AssignOperator {
-    private static TypeTransition operatorMap;
+public enum AssignOperator implements OperatorInterface {
+    ASSIGN("ASSIGN");
 
-    static {
-        try {
-            operatorMap = JsonUtil.json2map("out_put_json/assign.json");
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    private static EnumMap<AssignOperator, TypeTransition> operatorMap
+            = OperatorInterface.initializeOperatorMap(AssignOperator.class);
+
+    private final List<String> operatorStrings;
+
+    AssignOperator(String... operatorStrings) {
+        this.operatorStrings = Arrays.asList(operatorStrings);
     }
 
-    public static boolean assignCheckType(Type left, Type right) throws Exception {
-        if (operatorMap.containsKey(left) && operatorMap.get(left).containsKey(right)) {
-            switch (operatorMap.get(left).get(right)) {
-                case ERROR:
-                    throw new Exception("type error");
-                case NONSUPPORT:
-                    throw new Exception("Not supported");
-                default:
-                    return true;
-            }
-        }
-        return false;
+    @Override
+    public List<String> getOperatorStrings() {
+
+        return operatorStrings;
+    }
+
+    public static AssignOperator fromString(String input) {
+        return OperatorInterface.fromString(input, AssignOperator.class);
+    }
+
+    public static Boolean checkType(Type left, Type right, AssignOperator op) throws Exception {
+        return OperatorInterface.checkType(left, right, op, operatorMap);
     }
 }

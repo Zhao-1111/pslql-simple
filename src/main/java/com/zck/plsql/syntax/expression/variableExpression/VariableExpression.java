@@ -22,7 +22,7 @@ public class VariableExpression extends Expression {
             throw new Exception("variable not exist");
         }
         if (expression instanceof VariableExpression) {
-            type.setType((VariableExpression) expression);
+            setType((VariableExpression) expression);
         } else {
             throw new Exception("variable not exist");
         }
