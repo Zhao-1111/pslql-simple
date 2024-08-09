@@ -1,7 +1,6 @@
 package com.zck.plsql.syntax.expression;
 
 import com.zck.plsql.executor.compiler.CompilerContext;
-import com.zck.plsql.intermediate.operator.OperatorInterface;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeUtil;
 import com.zck.plsql.syntax.ITreeNode;

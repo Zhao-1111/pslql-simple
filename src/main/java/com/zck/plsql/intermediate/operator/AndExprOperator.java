@@ -10,7 +10,7 @@ import java.util.List;
 public enum AndExprOperator implements OperatorInterface{
     AND("AND");
 
-    private static EnumMap<AndExprOperator, TypeTransition> operatorMap
+    private static final EnumMap<AndExprOperator, TypeTransition> operatorMap
             = OperatorInterface.initializeOperatorMap(AndExprOperator.class);
 
     private final List<String> operatorStrings;

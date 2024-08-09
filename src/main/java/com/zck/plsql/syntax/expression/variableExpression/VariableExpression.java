@@ -31,8 +31,7 @@ public class VariableExpression extends Expression {
 
     @Override
     public Object execute(InterpreterContext ctx) throws Exception {
-        ConstantExpression res = ctx.findValue(name);
-        return res;
+        return ctx.findValue(name);
     }
 
     // 变量和常量的映射

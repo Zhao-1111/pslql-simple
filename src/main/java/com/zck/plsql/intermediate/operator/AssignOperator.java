@@ -10,7 +10,7 @@ import java.util.List;
 public enum AssignOperator implements OperatorInterface {
     ASSIGN("ASSIGN");
 
-    private static EnumMap<AssignOperator, TypeTransition> operatorMap
+    private static final EnumMap<AssignOperator, TypeTransition> operatorMap
             = OperatorInterface.initializeOperatorMap(AssignOperator.class);
 
     private final List<String> operatorStrings;

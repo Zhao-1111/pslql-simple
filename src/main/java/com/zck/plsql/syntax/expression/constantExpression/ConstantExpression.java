@@ -11,14 +11,10 @@ public class ConstantExpression extends Expression {
 
     /**
      * 获取常量值
-     *
-     * @return
      */
     public Object getConstValue() {
         return value;
     }
-
-    ;
 
     /**
      * 设置常量值，可以进行类型转换

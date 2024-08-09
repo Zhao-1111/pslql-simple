@@ -11,7 +11,7 @@ public enum UnaryExprOperator implements OperatorInterface{
     NEGATIVE("-"),
     POSITIVE("+");
 
-    private static EnumMap<UnaryExprOperator, TypeTransition> operatorMap
+    private static final EnumMap<UnaryExprOperator, TypeTransition> operatorMap
             = OperatorInterface.initializeOperatorMap(UnaryExprOperator.class);
 
     private final List<String> operatorStrings;

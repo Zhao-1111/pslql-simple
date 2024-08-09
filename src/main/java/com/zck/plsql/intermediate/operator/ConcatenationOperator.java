@@ -15,7 +15,7 @@ public enum ConcatenationOperator implements OperatorInterface {
     MOD("MOD"),
     BARBAR("||");
     
-    private static EnumMap<ConcatenationOperator, TypeTransition> operatorMap
+    private static final EnumMap<ConcatenationOperator, TypeTransition> operatorMap
             = OperatorInterface.initializeOperatorMap(ConcatenationOperator.class);
 
     private final List<String> operatorStrings;

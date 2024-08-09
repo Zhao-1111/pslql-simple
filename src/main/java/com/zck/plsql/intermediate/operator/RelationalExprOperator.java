@@ -16,7 +16,7 @@ public enum RelationalExprOperator implements OperatorInterface {
     GREATER(">"),
     GREATEREQUAL(">=");
 
-    private static EnumMap<RelationalExprOperator, TypeTransition> operatorMap
+    private static final EnumMap<RelationalExprOperator, TypeTransition> operatorMap
             = OperatorInterface.initializeOperatorMap(RelationalExprOperator.class);
 
     private final List<String> operatorStrings;
