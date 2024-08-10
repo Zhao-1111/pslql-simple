@@ -289,7 +289,7 @@ public class PLVisitor extends PlSqlParserBaseVisitor {
     public Object visitUnary_logical_expression(Unary_logical_expressionContext ctx) {
         UnaryLogicalExpression unaryLogicalExpression = new UnaryLogicalExpression();
         unaryLogicalExpression.setNot(!isEmpty(ctx.NOT()));
-        unaryLogicalExpression.setMultisetExpression(
+        unaryLogicalExpression.setExpr(
                 (Expression) visit(ctx.multiset_expression(), unaryLogicalExpression));
         return unaryLogicalExpression;
     }

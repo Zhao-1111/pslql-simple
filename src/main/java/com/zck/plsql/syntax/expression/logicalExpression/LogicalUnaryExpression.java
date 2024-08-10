@@ -1,11 +1,14 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
+import com.zck.plsql.executor.interpreter.InterpreterContext;
+import com.zck.plsql.intermediate.ConstantFactory;
 import com.zck.plsql.intermediate.SymTab;
 import com.zck.plsql.intermediate.operator.OperatorInterface;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.syntax.expression.Expression;
+import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 
-public class LogicalUnaryExpression<E extends Enum<E> & OperatorInterface> extends Expression {
+public abstract class LogicalUnaryExpression<E extends Enum<E> & OperatorInterface> extends Expression {
     protected Expression expr;
     protected E operator;
 
@@ -17,11 +20,19 @@ public class LogicalUnaryExpression<E extends Enum<E> & OperatorInterface> exten
             setType(expr.getType());
             return null;
         }
-        if (OperatorInterface.checkType(expr.getType(), operator)) {
-            setType(OperatorInterface.castType(expr.getType(), Type.NULLTYPE, operator));
-        }
+        setType(OperatorInterface.castType(expr.getType(), Type.NULLTYPE, operator));
         return null;
     }
+
+    @Override
+    public ConstantExpression execute(InterpreterContext ctx) throws Exception {
+        ConstantExpression constantValue = (ConstantExpression) expr.executeException(ctx);
+        if (operator == null) {
+            return constantValue;
+        }
+        return this.operator.apply(constantValue, ConstantFactory.createConstant(Type.NULLTYPE));
+    }
+
 
     public Expression getExpr() {
         return expr;

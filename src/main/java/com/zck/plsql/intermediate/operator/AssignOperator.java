@@ -1,13 +1,19 @@
 package com.zck.plsql.intermediate.operator;
 
 import com.zck.plsql.intermediate.type.TypeTransition;
+import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
 public enum AssignOperator implements OperatorInterface {
-    ASSIGN("ASSIGN");
+    ASSIGN("ASSIGN") {
+        @Override
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
+            return null;
+        }
+    };
 
     private static final EnumMap<AssignOperator, TypeTransition> operatorMap
             = OperatorInterface.initializeOperatorMap(AssignOperator.class);

@@ -32,15 +32,35 @@ public class ExpressionTest {
     public void test1() {
         String str =
                 "declare\n"
-                + "    var2 boolean := true;\n"
+                        + "    var2 boolean := true;\n"
+                        + "begin\n"
+                        + "    var2 := var2 and var2;\n"
+                        + "end;";
+        try {
+            Task task = new Task();
+            ITreeNode tree = task.parse(str);
+            task.semanticCheck(tree);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            assertTrue(false);
+        }
+        assertTrue(true);
+    }
+
+    @Test
+    public void test2() {
+        String str = "declare\n"
+                + "    a boolean := true;\n"
+                + "    b boolean := false;\n"
                 + "begin\n"
-                + "    var2 := var2 and var2;\n"
+                + "    b := a or b;\n"
+                + "    a := false and b;\n"
                 + "end;";
         try {
             Task task = new Task();
             ITreeNode tree = task.parse(str);
             task.semanticCheck(tree);
-            // task.execute(tree);
+            task.execute(tree);
         } catch (Exception exception) {
             exception.printStackTrace();
             assertTrue(false);

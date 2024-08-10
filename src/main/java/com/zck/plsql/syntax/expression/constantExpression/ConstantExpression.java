@@ -1,6 +1,7 @@
 package com.zck.plsql.syntax.expression.constantExpression;
 
 import com.zck.plsql.executor.interpreter.InterpreterContext;
+import com.zck.plsql.intermediate.operator.OperatorInterface;
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.syntax.expression.Expression;
 
@@ -18,6 +19,7 @@ public class ConstantExpression extends Expression {
 
     /**
      * 设置常量值，可以进行类型转换
+     * 用以解析时置入值
      */
     public void setConstValue(Object value) {
         if (value == null) {
@@ -29,6 +31,18 @@ public class ConstantExpression extends Expression {
             type = Type.VARCHAR2;
         } else if (value == BooleanValue.TRUE || value == BooleanValue.FALSE) {
             type = Type.BOOLEAN;
+        }
+        this.value = value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public <E extends Enum<E> & OperatorInterface> void calculationValue(ConstantExpression left,
+            ConstantExpression right, E op) {
+        if (value == null) {
+            return;
         }
         this.value = value;
     }

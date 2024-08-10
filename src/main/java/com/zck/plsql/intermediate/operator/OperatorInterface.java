@@ -2,6 +2,7 @@ package com.zck.plsql.intermediate.operator;
 
 import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeTransition;
+import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 import com.zck.plsql.util.JsonUtil;
 
 import java.io.IOException;
@@ -14,6 +15,10 @@ public interface OperatorInterface {
     String path = "operator" + separator;
 
     List<String> getOperatorStrings();
+
+    default ConstantExpression apply(ConstantExpression left, ConstantExpression right){
+        return left;
+    };
 
     <E extends Enum<E> & OperatorInterface> EnumMap<E, TypeTransition> getOperatorMap();
 

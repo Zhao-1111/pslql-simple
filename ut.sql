@@ -144,3 +144,25 @@ a int := 5;
 begin
     a := b;
 end;
+
+/*
+  variable declare
+  assignstmt
+*/
+declare
+    a int := 2;
+    b int;
+begin
+    b := a;
+end;
+
+/**
+ and or
+ */
+declare
+a boolean := true;
+    b boolean := false;
+begin
+    b := a and b;
+    a := a or b;
+end;

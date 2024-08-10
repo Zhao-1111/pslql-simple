@@ -7,9 +7,8 @@ import com.zck.plsql.syntax.expression.Expression;
  *     : NOT? multiset_expression unary_logical_operation?
  *     ;
  */
-public class UnaryLogicalExpression extends Expression {
+public class UnaryLogicalExpression extends LogicalUnaryExpression {
     private boolean not = false;
-    private Expression multisetExpression;
 
     public boolean isNot() {
         return not;
@@ -17,13 +16,5 @@ public class UnaryLogicalExpression extends Expression {
 
     public void setNot(boolean not) {
         this.not = not;
-    }
-
-    public Expression getMultisetExpression() {
-        return multisetExpression;
-    }
-
-    public void setMultisetExpression(Expression multisetExpreesion) {
-        this.multisetExpression = multisetExpreesion;
     }
 }
