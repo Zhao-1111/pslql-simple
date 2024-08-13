@@ -16,7 +16,7 @@ public interface OperatorInterface {
 
     List<String> getOperatorStrings();
 
-    default ConstantExpression apply(ConstantExpression left, ConstantExpression right){
+    default ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType){
         return left;
     };
 

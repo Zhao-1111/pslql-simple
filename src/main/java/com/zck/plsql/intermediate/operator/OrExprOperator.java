@@ -24,15 +24,13 @@ public enum OrExprOperator implements OperatorInterface {
          * 	9.	NULL OR NULL: 结果为 NULL。
          */
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            ConstantExpression res = ConstantFactory.createConstant(Type.NULLTYPE);
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right,Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
             if (left.getConstValue() == BooleanValue.TRUE || right.getConstValue() == BooleanValue.TRUE) {
-                res.setType(Type.BOOLEAN);
                 res.setValue(BooleanValue.TRUE);
                 return res;
             }
             if (left.getConstValue() == BooleanValue.FALSE && right.getConstValue() == BooleanValue.FALSE) {
-                res.setType(Type.BOOLEAN);
                 res.setValue(BooleanValue.FALSE);
                 return res;
             } else {

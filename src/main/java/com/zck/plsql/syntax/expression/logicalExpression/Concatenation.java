@@ -1,6 +1,6 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
-import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
+import com.zck.plsql.intermediate.operator.ConcatenationOperator;
 
 /**
  * concatenation
@@ -14,7 +14,7 @@ import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
  * | concatenation COLLATE column_collation_name
  * ;
  */
-public class Concatenation extends LogicalBinaryExpression {
+public class Concatenation extends LogicalBinaryExpression<ConcatenationOperator> {
 
 }
 

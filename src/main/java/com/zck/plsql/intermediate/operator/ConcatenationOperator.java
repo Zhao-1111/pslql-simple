@@ -1,47 +1,68 @@
 package com.zck.plsql.intermediate.operator;
 
+import com.zck.plsql.intermediate.ConstantFactory;
+import com.zck.plsql.intermediate.type.Type;
 import com.zck.plsql.intermediate.type.TypeTransition;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
 public enum ConcatenationOperator implements OperatorInterface {
-    PLUS("+"){
+    PLUS("+") {
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            return null;
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
+            BigDecimal resValue = ((BigDecimal) left.getConstValue()).add((BigDecimal) right.getConstValue());
+            res.storeValue(resValue);
+            return res;
         }
     },
-    MINUS("-"){
+    MINUS("-") {
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            return null;
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
+            BigDecimal resValue = ((BigDecimal) left.getConstValue()).subtract((BigDecimal) right.getConstValue());
+            res.storeValue(resValue);
+            return res;
         }
     },
-    ASTERISK("*"){
+    ASTERISK("*") {
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            return null;
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
+            BigDecimal resValue = ((BigDecimal) left.getConstValue()).multiply((BigDecimal) right.getConstValue());
+            res.storeValue(resValue);
+            return res;
         }
     },
-    SOLIDUS("/"){
+    SOLIDUS("/") {
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            return null;
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
+            BigDecimal resValue = ((BigDecimal) left.getConstValue()).divide((BigDecimal) right.getConstValue());
+            res.storeValue(resValue);
+            return res;
         }
     },
-    MOD("MOD"){
+    MOD("MOD") {
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            return null;
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
+            BigDecimal resValue = ((BigDecimal) left.getConstValue()).remainder((BigDecimal) right.getConstValue());
+            res.storeValue(resValue);
+            return res;
         }
     },
     BARBAR("||") {
         @Override
-        public ConstantExpression apply(ConstantExpression left, ConstantExpression right) {
-            return null;
+        public ConstantExpression apply(ConstantExpression left, ConstantExpression right, Type expectedType) {
+            ConstantExpression res = ConstantFactory.createConstant(expectedType);
+            String resValue = left.getConstValue() + ((String) right.getConstValue());
+            res.storeValue(resValue);
+            return res;
         }
     };
 

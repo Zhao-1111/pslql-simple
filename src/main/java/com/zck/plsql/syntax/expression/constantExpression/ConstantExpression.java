@@ -39,6 +39,13 @@ public class ConstantExpression extends Expression {
         this.value = value;
     }
 
+    public void storeValue(Object value) {
+        if (value instanceof ConstantExpression) {
+            this.value = ((ConstantExpression)value).getConstValue();
+        }
+        this.value = value;
+    }
+
     public <E extends Enum<E> & OperatorInterface> void calculationValue(ConstantExpression left,
             ConstantExpression right, E op) {
         if (value == null) {
@@ -54,5 +61,8 @@ public class ConstantExpression extends Expression {
 
     public enum BooleanValue {
         TRUE, FALSE, NULL
+    }
+    public enum NullValue {
+        NULL
     }
 }

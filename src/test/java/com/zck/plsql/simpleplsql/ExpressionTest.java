@@ -20,7 +20,7 @@ public class ExpressionTest {
             Task task = new Task();
             ITreeNode tree = task.parse(str);
             task.semanticCheck(tree);
-            // task.execute(tree);
+            task.execute(tree);
         } catch (Exception exception) {
             exception.printStackTrace();
             assertTrue(false);

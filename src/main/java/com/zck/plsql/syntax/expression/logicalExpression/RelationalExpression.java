@@ -1,5 +1,6 @@
 package com.zck.plsql.syntax.expression.logicalExpression;
 
+import com.zck.plsql.intermediate.operator.RelationalExprOperator;
 import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
 
 /**
@@ -16,6 +17,6 @@ import com.zck.plsql.syntax.expression.constantExpression.ConstantExpression;
  * | ('<' | '>') '='?
  * ;
  */
-public class RelationalExpression extends LogicalBinaryExpression {
+public class RelationalExpression extends LogicalBinaryExpression<RelationalExprOperator> {
 
 }

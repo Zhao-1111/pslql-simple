@@ -27,7 +27,7 @@ public abstract class LogicalBinaryExpression<E extends Enum<E> & OperatorInterf
     public ConstantExpression execute(InterpreterContext ctx) throws Exception {
         ConstantExpression leftConstantValue = (ConstantExpression) left.executeException(ctx);
         ConstantExpression rightConstantValue = (ConstantExpression) right.executeException(ctx);
-        return this.operator.apply(leftConstantValue, rightConstantValue);
+        return this.operator.apply(leftConstantValue, rightConstantValue, type);
     }
 
     public Expression getLeft() {

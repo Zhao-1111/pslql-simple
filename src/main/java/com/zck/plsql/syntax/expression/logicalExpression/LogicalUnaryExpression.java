@@ -30,7 +30,7 @@ public abstract class LogicalUnaryExpression<E extends Enum<E> & OperatorInterfa
         if (operator == null) {
             return constantValue;
         }
-        return this.operator.apply(constantValue, ConstantFactory.createConstant(Type.NULLTYPE));
+        return this.operator.apply(constantValue, ConstantFactory.createConstant(Type.NULLTYPE), type);
     }
 
 
